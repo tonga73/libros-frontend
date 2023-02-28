@@ -6,8 +6,10 @@ import {
 } from "react-router-dom"
 import { RecoilRoot } from "recoil"
 
-import { Root } from "./layouts/Root"
+import { ThemeProvider } from "@mui/material/"
+import theme from "./theme"
 
+import { Root } from "./layouts/Root"
 import { Landing } from "./scenes/Landing"
 
 const router = createBrowserRouter(
@@ -22,7 +24,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <RecoilRoot>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </RecoilRoot>
   )
 }
