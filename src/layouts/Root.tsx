@@ -7,8 +7,6 @@ import { useTheme } from "@mui/material"
 export const Root = () => {
   const theme = useTheme()
 
-  console.log("theme: ", theme)
-
   return (
     <Box>
       <Outlet />
