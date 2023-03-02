@@ -31,7 +31,7 @@ const theme: Theme = createTheme({
       default: "#171717",
     },
   },
-  typography: { fontFamily: "Reggae One" },
+  typography: { fontFamily: "Reggae One", allVariants: { color: "#f2f2f2" } },
 })
 
 export default theme
