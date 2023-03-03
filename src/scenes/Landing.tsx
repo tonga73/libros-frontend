@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 
 import { motion } from "framer-motion"
 
+import Banner from "../components/Banner"
 import Carousel from "../components/Carousel"
 import FeaturedChapterTexts from "../components/FeaturedChapterTexts"
 
@@ -51,6 +52,7 @@ export const Landing = () => {
     >
       <Carousel books={books} />
       <FeaturedChapterTexts />
+      <Banner />
     </Box>
   )
 }
