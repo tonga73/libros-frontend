@@ -45,7 +45,12 @@ const FeaturedChapterTexts = () => {
         <Box
           component={motion.div}
           whileTap={{ scale: 0.95 }}
-          gridColumn={{ xs: "span 12", sm: "span 4" }}
+          gridColumn={{
+            xs: "span 12",
+            sm: "span 4",
+            cursor: "pointer",
+            userSelect: "none",
+          }}
         >
           <Box
             sx={{
@@ -55,8 +60,6 @@ const FeaturedChapterTexts = () => {
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              cursor: "pointer",
-              userSelect: "none",
             }}
           ></Box>
           <Box
