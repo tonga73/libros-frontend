@@ -2,6 +2,8 @@ import React from "react"
 
 import Box from "@mui/material/Box"
 
+import { motion } from "framer-motion"
+
 import Carousel from "../components/Carousel"
 
 const books: Book[] = [
@@ -18,8 +20,9 @@ const books: Book[] = [
   },
   {
     id: 2,
-    title: "To Kill a Mockingbird",
-    description: "Harper Lee",
+    title: "La Chancha con ruleros",
+    description:
+      "Este libro-album pertenece a la Colección CURIOSA VIDA ANIMAL. Relata la afligida existencia de una chancha que quería tener el pelo enrulado.",
     type: "Cuento",
     coverImage: "http://hugomitoire.com/mediafiles/portada_libros/image927.png",
     backgroundImage:
@@ -27,8 +30,8 @@ const books: Book[] = [
   },
   {
     id: 3,
-    title: "Pride and Prejudice",
-    description: "Jane Austen",
+    title: "Cuentos de terror para Franco VIII",
+    description: "Cuentos de misterio y terror.",
     type: "Novela",
     coverImage:
       "http://hugomitoire.com/mediafiles/portada_libros/image1081.png",
@@ -39,7 +42,12 @@ const books: Book[] = [
 
 export const Landing = () => {
   return (
-    <Box>
+    <Box
+      component={motion.div}
+      initial={{ x: 10, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -10, opacity: 0 }}
+    >
       <Carousel books={books} />
     </Box>
   )

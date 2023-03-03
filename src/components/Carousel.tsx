@@ -33,16 +33,18 @@ const Carousel = ({ books }: CarouselProps) => {
       sx={{
         backgroundImage: `url(${book.backgroundImage})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: height,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: { xs: "30%", lg: "center" },
+        minHeight: height,
+        height: "min-content",
         overflowX: "hidden",
       }}
     >
       <Box
         display="grid"
-        gridTemplateColumns={{ xs: "80% 20%", lg: "55% 35% 10%" }}
-        gridTemplateRows={{ xs: "70% 10%", lg: "auto" }}
+        gridTemplateColumns="repeat(12, minmax(0, 1fr))"
         columnGap={1}
+        pt={{ xs: 7, sm: 0 }}
         sx={{
           transition: "background-image 0.2s ease-in-out",
           placeItems: "center",
@@ -51,39 +53,38 @@ const Carousel = ({ books }: CarouselProps) => {
         }}
       >
         <Box
-          gridColumn={{ xs: "span 2", lg: "span 1" }}
+          gridColumn={{ xs: "span 12", sm: "span 6" }}
+          display="flex"
+          flexDirection="column"
+          rowGap={0.5}
           sx={{
-            order: { xs: 2, lg: 0 },
             textAlign: "right",
-            p: 3,
+            order: { xs: 2, sm: 0 },
             pl: {
               md: "20%",
             },
+            py: { xs: 3, sm: 0 },
+            px: { xs: 1.5, sm: 0 },
           }}
         >
           <Typography variant="h6" fontFamily="cinzel" fontWeight="bold">
             {book.type}
           </Typography>
-          <Typography variant="h2">{book.title}</Typography>
-          <Typography
-            variant="h5"
-            fontWeight="bold"
-            fontFamily="bellefair"
-            sx={{
-              py: 1.5,
-            }}
-          >
+          <Typography variant="h2" lineHeight="110%">
+            {book.title}
+          </Typography>
+          <Typography variant="h5" fontWeight="bold" fontFamily="bellefair">
             {book.description}
           </Typography>
         </Box>
         <Box
-          gridColumn={{ xs: "span 2", lg: "span 1" }}
+          gridColumn={{ xs: "span 12", sm: "span 6" }}
           display="grid"
           gridAutoFlow="column"
           gap={3}
           sx={{
             alignItems: "center",
-            transform: "translateX(25%)",
+            transform: { xs: "translateX(25%)", sm: "translateX(15%)" },
           }}
         >
           <AnimatePresence mode="popLayout">
@@ -92,20 +93,22 @@ const Carousel = ({ books }: CarouselProps) => {
               key={book.title}
               src={book.coverImage}
               alt={book.title}
+              onDragEnd={next}
               sx={{
                 height: {
                   xs: (height! / 5) * 2.5,
-                  lg: (height! / 5) * 3.5,
+                  sm: (height! / 5) * 3.5,
                 },
                 position: "relative",
                 bgcolor: "blue",
                 margin: "0 auto",
               }}
               layout="position"
-              initial={{ x: 10, opacity: 0 }}
+              initial={{ x: 25, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -10, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              exit={{ x: -25, opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              draggable
             />
             <Box
               component={motion.img}
@@ -116,7 +119,7 @@ const Carousel = ({ books }: CarouselProps) => {
               sx={{
                 height: {
                   xs: (height! / 5) * 2,
-                  lg: (height! / 5) * 3,
+                  sm: (height! / 5) * 3,
                 },
                 position: "relative",
                 margin: "0 auto",
@@ -127,9 +130,9 @@ const Carousel = ({ books }: CarouselProps) => {
                 },
               }}
               layout="position"
-              initial={{ x: 10, opacity: 0 }}
+              initial={{ x: 25, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -10, opacity: 0 }}
+              exit={{ x: -25, opacity: 0 }}
               transition={{ duration: 0.2 }}
             />
           </AnimatePresence>
