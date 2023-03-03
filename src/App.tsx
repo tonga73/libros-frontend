@@ -4,10 +4,6 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom"
-import { RecoilRoot } from "recoil"
-
-import { ThemeProvider } from "@mui/material/"
-import theme from "./theme"
 
 import { AnimatePresence } from "framer-motion"
 
@@ -30,13 +26,7 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  return (
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </RecoilRoot>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

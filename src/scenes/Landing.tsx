@@ -5,6 +5,7 @@ import Box from "@mui/material/Box"
 import { motion } from "framer-motion"
 
 import Carousel from "../components/Carousel"
+import FeaturedChapterTexts from "../components/FeaturedChapterTexts"
 
 const books: Book[] = [
   {
@@ -49,6 +50,7 @@ export const Landing = () => {
       exit={{ x: -10, opacity: 0 }}
     >
       <Carousel books={books} />
+      <FeaturedChapterTexts />
     </Box>
   )
 }

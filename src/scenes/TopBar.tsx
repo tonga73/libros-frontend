@@ -71,7 +71,6 @@ const TopBar = () => {
                 fontFamily: "Cinzel",
                 fontWeight: 500,
                 letterSpacing: ".3rem",
-                color: "inherit",
                 textDecoration: "none",
               }}
             >
@@ -86,38 +85,11 @@ const TopBar = () => {
                 display: { xs: "flex", md: "none" },
                 fontFamily: "Cinzel",
                 fontWeight: 500,
-                color: "inherit",
                 textDecoration: "none",
               }}
             >
               Hugo Mitoire
             </Typography>
-          </Box>
-
-          <Box
-            gridColumn={{ xs: "span 2", lg: "span 4" }}
-            justifyContent="flex-end"
-            sx={{ display: { xs: "flex", lg: "flex" } }}
-          >
-            <Toolbar disableGutters>
-              <Box sx={{ justifyContent: "end" }}>
-                <IconButton
-                  component={Link}
-                  to={"/admin"}
-                  disableRipple
-                  sx={{
-                    color: "rgba(255, 255, 255, 0.7)",
-                    display: "block",
-                    textTransform: "capitalize",
-                    textAlign: "center",
-                    "&:hover": {
-                      color: "rgba(255, 255, 255, 1)",
-                      bgcolor: "transparent",
-                    },
-                  }}
-                ></IconButton>
-              </Box>
-            </Toolbar>
           </Box>
         </Box>
       </Container>

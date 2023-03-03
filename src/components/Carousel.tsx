@@ -35,6 +35,7 @@ const Carousel = ({ books }: CarouselProps) => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: { xs: "30%", lg: "center" },
+        backgroundAttachment: "fixed",
         minHeight: height,
         height: "min-content",
         overflowX: "hidden",

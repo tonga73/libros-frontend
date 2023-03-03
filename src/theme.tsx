@@ -20,7 +20,6 @@ interface Theme {
 
 const theme: Theme = createTheme({
   palette: {
-    mode: "dark",
     primary: {
       main: "#FFCC33",
     },
@@ -31,7 +30,7 @@ const theme: Theme = createTheme({
       default: "#171717",
     },
   },
-  typography: { fontFamily: "Reggae One", allVariants: { color: "#f2f2f2" } },
+  typography: { fontFamily: "Reggae One", allVariants: { color: "#fffcf2" } },
 })
 
 export default theme
