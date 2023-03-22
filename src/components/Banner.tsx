@@ -7,7 +7,7 @@ const Banner = () => {
   return (
     <Box display="grid" gridTemplateColumns="repeat(12, minmax(0, 1fr))">
       <Box
-        gridColumn={{ xs: "span 12", sm: "span 4" }}
+        gridColumn={{ xs: "span 12", lg: "span 4" }}
         display="flex"
         flexDirection="column"
         sx={{
@@ -19,7 +19,7 @@ const Banner = () => {
           alignItems: { xs: "initial", lg: "center" },
           position: { xs: "relative", lg: "relative" },
           userSelect: "none",
-          transform: { xs: "translate(0%)", sm: "translate(25%)" },
+          transform: { xs: "translate(0%, -35%)", lg: "translate(25%)" },
         }}
       >
         <Box
@@ -67,7 +67,7 @@ const Banner = () => {
           </Box>
         </Box>
       </Box>
-      <Box gridColumn={{ xs: "span 12", sm: "span 8" }}>
+      <Box gridColumn={{ xs: "span 12", lg: "span 8" }}>
         <Box
           component="img"
           src="/images/fanArt.png"

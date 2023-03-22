@@ -45,7 +45,7 @@ const Carousel = ({ books }: CarouselProps) => {
         display="grid"
         gridTemplateColumns="repeat(12, minmax(0, 1fr))"
         columnGap={1}
-        pt={{ xs: 7, sm: 0 }}
+        pt={{ xs: 7, lg: 0 }}
         sx={{
           transition: "background-image 0.2s ease-in-out",
           placeItems: "center",
@@ -54,18 +54,18 @@ const Carousel = ({ books }: CarouselProps) => {
         }}
       >
         <Box
-          gridColumn={{ xs: "span 12", sm: "span 6" }}
+          gridColumn={{ xs: "span 12", lg: "span 6" }}
           display="flex"
           flexDirection="column"
           rowGap={0.5}
           sx={{
             textAlign: "right",
-            order: { xs: 2, sm: 0 },
+            order: { xs: 2, lg: 0 },
             pl: {
               md: "20%",
             },
-            py: { xs: 3, sm: 0 },
-            px: { xs: 1.5, sm: 0 },
+            py: { xs: 3, lg: 0 },
+            px: { xs: 1.5, lg: 0 },
           }}
         >
           <Typography variant="h6" fontFamily="cinzel" fontWeight="bold">
@@ -79,13 +79,17 @@ const Carousel = ({ books }: CarouselProps) => {
           </Typography>
         </Box>
         <Box
-          gridColumn={{ xs: "span 12", sm: "span 6" }}
+          gridColumn={{ xs: "span 12", lg: "span 6" }}
           display="grid"
           gridAutoFlow="column"
           gap={3}
           sx={{
             alignItems: "center",
-            transform: { xs: "translateX(25%)", sm: "translateX(15%)" },
+            transform: {
+              xs: "translateX(25%)",
+              md: "translateX(30%)",
+              lg: "translateX(15%)",
+            },
           }}
         >
           <AnimatePresence mode="popLayout">
@@ -98,7 +102,8 @@ const Carousel = ({ books }: CarouselProps) => {
               sx={{
                 height: {
                   xs: (height! / 5) * 2.5,
-                  sm: (height! / 5) * 3.5,
+                  md: (height! / 5) * 3,
+                  lg: (height! / 5) * 3.5,
                 },
                 position: "relative",
                 bgcolor: "blue",
@@ -120,7 +125,8 @@ const Carousel = ({ books }: CarouselProps) => {
               sx={{
                 height: {
                   xs: (height! / 5) * 2,
-                  sm: (height! / 5) * 3,
+                  md: (height! / 5) * 2.5,
+                  lg: (height! / 5) * 3,
                 },
                 position: "relative",
                 margin: "0 auto",

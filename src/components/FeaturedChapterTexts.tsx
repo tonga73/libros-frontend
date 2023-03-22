@@ -9,7 +9,7 @@ import useWindowSize from "../utils/windowDimensions"
 
 const chapters = [
   {
-    name: "La poseida",
+    name: "La poseida sdadasd asd as dsad asdas",
     type: "cuento",
     imageUrl:
       "http://2.bp.blogspot.com/-HjQOozN-l38/Tan37BbyupI/AAAAAAAAA-A/QO2DRZOB3Lc/s1600/poseida.jpg",
@@ -35,45 +35,46 @@ const FeaturedChapterTexts = () => {
   return (
     <Box
       display="grid"
-      gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-      columnGap={{ xs: 0, sm: 5 }}
-      rowGap={{ xs: 3, sm: 0 }}
-      p={{ xs: 1, sm: 5 }}
+      gridTemplateColumns={`repeat(2, ${width! / 2}px)`}
+      columnGap={{ xs: 0, sm: 3 }}
+      rowGap={{ xs: 3, sm: 5 }}
+      py={{ xs: 1, sm: 5 }}
       sx={{ placeItems: "center" }}
     >
-      {chapters.map((chapter, index) => (
+      {chapters.map(({ imageUrl, name, type }, index) => (
         <Box
+          id="chapter-text-info"
+          key={index}
           component={motion.div}
+          maxWidth={`${width! / 2}px`}
           whileTap={{ scale: 0.95 }}
           gridColumn={{
-            xs: "span 12",
-            sm: "span 4",
             cursor: "pointer",
             userSelect: "none",
           }}
         >
           <Box
             sx={{
+              placeItems: "center",
               width: { xs: (width! / 100) * 90, sm: "100%" },
               height: { xs: "330px", sm: width! / 5 },
-              background: `url(${chapter.imageUrl})`,
+              background: `url(${imageUrl})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
             }}
-          ></Box>
-          <Box
-            display="grid"
-            height="100%"
-            px={{ xs: 0, sm: 10 }}
-            sx={{
-              transform: { xs: "translateY(-55%)", sm: "translateY(-55%)" },
-            }}
           >
-            <Typography variant="h6" fontWeight="bold" fontFamily="cinzel">
-              {chapter.type}
-            </Typography>
-            <Typography variant="h3">{chapter.name}</Typography>
+            <Box
+              display="grid"
+              gridAutoRows="min-content"
+              alignContent="end"
+              height="100%"
+            >
+              <Typography variant="h6" fontWeight="bold" fontFamily="cinzel">
+                {type}
+              </Typography>
+              <Typography variant="h3">{name}</Typography>
+            </Box>
           </Box>
         </Box>
       ))}
