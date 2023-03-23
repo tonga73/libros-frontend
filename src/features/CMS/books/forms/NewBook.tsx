@@ -3,20 +3,29 @@ import { useState, useRef } from "react"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import ButtonGroup from "@mui/material/ButtonGroup"
+import FormControl from "@mui/material/FormControl"
+import Input from "@mui/material/Input"
+import InputLabel from "@mui/material/InputLabel"
 import OutlinedInput from "@mui/material/OutlinedInput"
 import TextField from "@mui/material/TextField"
 
 import FileUploadIcon from "@mui/icons-material/FileUpload"
 
 import { CustomSelectInput } from "../../global/custom/CustomSelectInput"
+import { CustomDropzone } from "../../global/custom/CustomDropzone"
 
 export const NewBook = () => {
   const responseBody: { [key: string]: string } = {}
-  const [books, setBooks] = useState<Book[]>([])
-  const [publishedState, setPublishedState] = useState(false)
 
   const inputFileRefCover = useRef<HTMLInputElement>(null)
-  const [cover, setCover] = useState("")
+
+  const [books, setBooks] = useState<Book[]>([])
+
+  const [type, setType] = useState("")
+  const [genre, setGenre] = useState("")
+  const [illustrator, setIllustrator] = useState("")
+  const [publisher, setPublisher] = useState("")
+  const [cover, setCover] = useState<File | null>(null)
 
   const handleCreate = (obj: Book): void => {
     obj.id = Math.random()
@@ -27,60 +36,25 @@ export const NewBook = () => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
-    console.log(formData)
     formData.forEach(
       (value, property) => (responseBody[property] = value.toString())
     )
+
+    console.log(responseBody)
   }
 
-  const handlePublishedChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPublishedState(event.target.checked)
+  const handleDropCover = (files: File[]) => {
+    setCover(files[0])
   }
-
-  const handleFileCover = () => {
-    const files = inputFileRefCover.current?.files
-
-    if (files) {
-      const fileNames: string[] = Array.from(files).map((file) => file.name)
-      const coverNames = fileNames.join(", ") // Unir nombres de archivos separados por coma
-      setCover(coverNames)
-    }
-  }
-
-  const selectValues = [
-    {
-      label: "Tipo",
-      name: "type",
-      options: ["Item Tipo"],
-    },
-    {
-      label: "Genero",
-      name: "genre",
-      options: ["Item Genero"],
-    },
-    {
-      label: "Ilustrador",
-      name: "illustrator",
-      options: ["Item 1"],
-    },
-    {
-      label: "Editorial",
-      name: "publisher",
-      options: ["Item 1"],
-    },
-  ]
 
   return (
     <Box
       component={"form"}
       onSubmit={handleSubmit}
       display="grid"
-      gridTemplateColumns="60% 40%"
+      gridTemplateColumns="55% 43%"
       gap={3}
       sx={{
-        p: 3,
         "* > *": {
           color: "white",
         },
@@ -105,74 +79,69 @@ export const NewBook = () => {
           rows={3}
         />
 
-        <Box component={TextField} name="publicationDate" type="date" />
-
-        {selectValues.map(({ label, name, options }, index) => (
-          <CustomSelectInput
-            key={index}
-            name={name}
-            label={label}
-            options={options}
-            variant="standard"
-            value={"option"}
-            onChange={() => {}}
+        <FormControl variant="filled">
+          <InputLabel shrink htmlFor="date-input">
+            Fecha de publicacion
+          </InputLabel>
+          <Box
+            id="date-input"
+            component={TextField}
+            name="publicationDate"
+            type="date"
+            variant="filled"
           />
-        ))}
+        </FormControl>
 
-        <Box
-          component={OutlinedInput}
-          name="cover"
-          placeholder="Tapa"
-          value={cover || ""}
-          endAdornment={
-            <Button
-              endIcon={<FileUploadIcon />}
-              variant="contained"
-              component="label"
-            >
-              Subir
-              <input
-                hidden
-                name="cover"
-                accept="image/*"
-                multiple
-                type="file"
-                ref={inputFileRefCover}
-                onChange={handleFileCover}
-              />
-            </Button>
+        <CustomSelectInput
+          name="type"
+          label="Tipo"
+          options={["Novela", "Cuento"]}
+          variant="standard"
+          value={type}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setType(e.target.value)
           }
         />
 
-        <Box
-          component={OutlinedInput}
-          name="cover"
-          placeholder="Tapa"
-          value={cover || ""}
-          endAdornment={
-            <Button
-              endIcon={<FileUploadIcon />}
-              variant="contained"
-              component="label"
-            >
-              Subir
-              <input
-                hidden
-                name="cover"
-                accept="image/*"
-                multiple
-                type="file"
-                ref={inputFileRefCover}
-                onChange={handleFileCover}
-              />
-            </Button>
+        <CustomSelectInput
+          name="genre"
+          label="Genero"
+          options={["Negro", "Fantastico"]}
+          variant="standard"
+          value={genre}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setGenre(e.target.value)
+          }
+        />
+
+        <CustomSelectInput
+          name="illustrator"
+          label="Ilustrador"
+          options={["Maco", "Otro"]}
+          variant="standard"
+          value={illustrator}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setIllustrator(e.target.value)
+          }
+        />
+
+        <CustomSelectInput
+          name="publisher"
+          label="Editorial"
+          options={["De la paz", "Ediciones B"]}
+          variant="standard"
+          value={publisher}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setPublisher(e.target.value)
           }
         />
 
         <Box component={TextField} label="CHAPTERS" />
       </Box>
 
-      <Box>otherside</Box>
+      <Box display="grid">
+        <CustomDropzone name="cover" onDrop={handleDropCover} />
+      </Box>
 
       <Box gridColumn="span 2" component={ButtonGroup} fullWidth>
         <Button value="submit-funeral" type="submit" variant="contained">

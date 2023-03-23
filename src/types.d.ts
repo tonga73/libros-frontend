@@ -1,3 +1,9 @@
+// global
+interface FileUploadPreview extends File {
+  preview: string
+}
+
+// MODELS
 type Book = {
   id?: number
   title?: string

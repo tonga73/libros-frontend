@@ -4,13 +4,14 @@ import { Link } from "react-router-dom"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import ButtonGroup from "@mui/material/ButtonGroup"
+import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
 import { NewBook } from "./forms/NewBook"
 
 const index = () => {
   return (
-    <Box>
+    <Box component={Container}>
       <Box
         display="grid"
         gridTemplateColumns="10% auto"
