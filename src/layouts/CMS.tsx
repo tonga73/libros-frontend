@@ -18,9 +18,7 @@ export const CMS = () => {
         </Container>
       </AppBar>
 
-      <Box display="grid" height="90vh" sx={{ placeItems: "center" }}>
-        <Outlet />
-      </Box>
+      <Outlet />
     </Box>
   )
 }

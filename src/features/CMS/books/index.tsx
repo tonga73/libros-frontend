@@ -1,26 +1,30 @@
+import { useState } from "react"
+import { Link } from "react-router-dom"
+
 import Box from "@mui/material/Box"
-import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import ButtonGroup from "@mui/material/ButtonGroup"
 import Typography from "@mui/material/Typography"
 
+import { NewBook } from "./forms/NewBook"
+
 const index = () => {
-  const responseBody: { [key: string]: string } = {}
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-
-    formData.forEach(
-      (value, property) => (responseBody[property] = value.toString())
-    )
-    console.log(responseBody)
-  }
-
   return (
     <Box>
-      <Typography textTransform="uppercase" sx={{ opacity: 0.3 }}>
-        Admin Books
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField label="Titulo" />
+      <Box
+        display="grid"
+        gridTemplateColumns="10% auto"
+        bgcolor="dark"
+        sx={{ placeItems: "center" }}
+      >
+        <Box gridColumn="span 2" py={1}>
+          <Typography textTransform="uppercase" sx={{ opacity: 0.3 }}>
+            Admin Books
+          </Typography>
+        </Box>
+      </Box>
+      <Box display="grid" py={1}>
+        <NewBook />
       </Box>
     </Box>
   )
