@@ -2,23 +2,24 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App"
 import "./index.css"
-import { RecoilRoot } from "recoil"
+import { store } from "./app/store"
+import { Provider } from "react-redux"
 
 import { ThemeProvider, GlobalStyles, CssBaseline } from "@mui/material/"
 import theme from "./theme"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <CssBaseline />
-    <GlobalStyles
-      styles={{
-        body: { backgroundColor: "#171717" },
-      }}
-    />
-    <RecoilRoot>
+    <Provider store={store}>
+      <CssBaseline />
+      <GlobalStyles
+        styles={{
+          body: { backgroundColor: "#171717" },
+        }}
+      />
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
-    </RecoilRoot>
+    </Provider>
   </React.StrictMode>
 )

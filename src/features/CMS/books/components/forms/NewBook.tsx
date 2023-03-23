@@ -11,8 +11,9 @@ import TextField from "@mui/material/TextField"
 
 import FileUploadIcon from "@mui/icons-material/FileUpload"
 
-import { CustomSelectInput } from "../../global/custom/CustomSelectInput"
-import { CustomDropzone } from "../../global/custom/CustomDropzone"
+// CMS-GLOBAL CUSTOM COMPONENTS
+import { CustomSelectInput } from "../../../global/custom/CustomSelectInput"
+import { CustomDropzone } from "../../../global/custom/CustomDropzone"
 
 export const NewBook = () => {
   const responseBody: { [key: string]: string } = {}
