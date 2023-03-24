@@ -7,7 +7,7 @@ import ButtonGroup from "@mui/material/ButtonGroup"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
-import { NewBook } from "./components/forms/NewBook"
+import { NewBook } from "./forms/NewBook"
 
 const index = () => {
   return (
