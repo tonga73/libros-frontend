@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App"
 import "./index.css"
@@ -6,16 +6,28 @@ import "./index.css"
 import { ThemeProvider, GlobalStyles, CssBaseline } from "@mui/material/"
 import theme from "./theme"
 
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil"
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <CssBaseline />
-    <GlobalStyles
-      styles={{
-        body: { backgroundColor: "#171717" },
-      }}
-    />
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <RecoilRoot>
+      <Suspense fallback={<div>Loading whale types...</div>}>
+        <CssBaseline />
+        <GlobalStyles
+          styles={{
+            body: { backgroundColor: "#171717" },
+          }}
+        />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </Suspense>
+    </RecoilRoot>
   </React.StrictMode>
 )

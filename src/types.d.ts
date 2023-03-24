@@ -6,9 +6,16 @@ interface FileUploadPreview extends File {
 // MODELS
 type Book = {
   id?: number
-  title?: string
+  name?: string
   description?: string
   type?: string
-  coverImage?: string
+  cover?: Image
   backgroundImage?: string
+}
+
+type Image = {
+  id?: number
+  filename?: string
+  url?: string
+  type?: string
 }
