@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { ChangeEvent, useState, useEffect, useRef } from "react"
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -15,7 +15,26 @@ import FileUploadIcon from "@mui/icons-material/FileUpload"
 import { CustomSelectInput } from "../../global/custom/CustomSelectInput"
 import { CustomDropzone } from "../../global/custom/CustomDropzone"
 
-export const BookForm = (book: Book) => {
+interface BookFormProps {
+  book?: Book
+}
+
+interface BookFormField {
+  type?: string
+  name: string
+  value?: string
+  label: string
+  multiline?: boolean
+  minRows?: number
+  options?: string[]
+  onChange: (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void
+}
+
+export const BookForm = ({ book }: BookFormProps) => {
   const responseBody: { [key: string]: string } = {}
 
   const inputFileRefCover = useRef<HTMLInputElement>(null)
@@ -28,11 +47,69 @@ export const BookForm = (book: Book) => {
   const [publicationDate, setPublicationDate] = useState(
     book?.publicationDate || ""
   )
-  const [type, setType] = useState("")
-  const [genre, setGenre] = useState("")
-  const [illustrator, setIllustrator] = useState("")
-  const [publisher, setPublisher] = useState("")
-  const [cover, setCover] = useState<File | null>(null)
+  const [type, setType] = useState(book?.type || "")
+  const [genre, setGenre] = useState(book?.genre || "")
+  const [illustrator, setIllustrator] = useState(book?.illustrator || "")
+  const [publisher, setPublisher] = useState(book?.publisher || "")
+  const [cover, setCover] = useState<Image | undefined | null>(
+    book?.cover || undefined
+  )
+
+  const bookFormFields: BookFormField[] = [
+    {
+      name: "name",
+      value: name,
+      label: "Titulo",
+      onChange: (event) => setName(event.target.value),
+    },
+    {
+      name: "description",
+      value: description,
+      label: "Descripcion",
+      multiline: true,
+      minRows: 2,
+      onChange: (event) => setDescription(event.target.value),
+    },
+    {
+      type: "date",
+      name: "publicationDate",
+      value: publicationDate,
+      label: "Fecha de publicacion",
+      onChange: (event) => setPublicationDate(event.target.value),
+    },
+    {
+      type: "select",
+      name: "type",
+      value: type,
+      label: "Tipo",
+      options: ["novela", "cuento"],
+      onChange: (event) => setType(event.target.value),
+    },
+    {
+      type: "select",
+      name: "genre",
+      value: genre,
+      label: "Genero",
+      options: ["Negro", "Fantastico"],
+      onChange: (event) => setGenre(event.target.value),
+    },
+    {
+      type: "select",
+      name: "illustrator",
+      value: illustrator,
+      label: "Ilustrador",
+      options: ["Maco", "Otro"],
+      onChange: (event) => setIllustrator(event.target.value),
+    },
+    {
+      type: "select",
+      name: "publisher",
+      value: publisher,
+      label: "Editorial",
+      options: ["De la paz", "Ediciones B"],
+      onChange: (event) => setPublisher(event.target.value),
+    },
+  ]
 
   const handleCreate = (obj: Book): void => {
     obj.id = Math.random()
@@ -50,15 +127,31 @@ export const BookForm = (book: Book) => {
     console.log("bookForm res: ", responseBody)
   }
 
-  const handleDropCover = (files: File[]) => {
-    setCover(files[0])
+  const handleDropCover = (file: File) => {
+    setCover(file)
   }
 
   useEffect(() => {
-    setName(book?.name || "")
-    setDescription(book?.description || "")
-    setPublicationDate(book?.publicationDate || "")
+    const {
+      name = "",
+      description = "",
+      publicationDate = "",
+      type = "",
+      genre = "",
+      illustrator = "",
+      publisher = "",
+      cover = {},
+    } = book || {}
+    setName(name)
+    setDescription(description)
+    setPublicationDate(publicationDate)
+    setType(type)
+    setGenre(genre)
+    setIllustrator(illustrator)
+    setPublisher(publisher)
+    setCover(cover)
   }, [book])
+
   return (
     <Box
       component={"form"}
@@ -74,6 +167,7 @@ export const BookForm = (book: Book) => {
     >
       <Box
         display="grid"
+        gridTemplateColumns={`repeat(2, 1fr)`}
         gap={1}
         sx={{
           "* > div": {
@@ -81,89 +175,53 @@ export const BookForm = (book: Book) => {
           },
         }}
       >
-        <Box
-          component={TextField}
-          name="name"
-          label="Titulo"
-          value={name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value)
+        {bookFormFields.map((field, index) => {
+          switch (field.type) {
+            case "date":
+              return (
+                <Box
+                  component={FormControl}
+                  key={`${field.type}_${index}`}
+                  variant="filled"
+                  gridColumn={"span 2"}
+                >
+                  <InputLabel shrink htmlFor="date-input">
+                    {field.label}
+                  </InputLabel>
+                  <Box
+                    component={TextField}
+                    name={field.name}
+                    type={field.type}
+                    value={field.value}
+                    variant="filled"
+                  />
+                </Box>
+              )
+            case "select":
+              return (
+                <CustomSelectInput key={`${field.type}_${index}`} {...field} />
+              )
+            default:
+              return (
+                <Box
+                  key={`${field.type}_${index}`}
+                  component={TextField}
+                  gridColumn="span 2"
+                  {...field}
+                />
+              )
           }
-        />
-
-        <Box
-          component={TextField}
-          name="description"
-          label="Descripcion"
-          multiline
-          rows={3}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setDescription(e.target.value)
-          }
-        />
-
-        <FormControl variant="filled">
-          <InputLabel shrink htmlFor="date-input">
-            Fecha de publicacion
-          </InputLabel>
-          <Box
-            id="date-input"
-            component={TextField}
-            name="publicationDate"
-            type="date"
-            variant="filled"
-          />
-        </FormControl>
-
-        <CustomSelectInput
-          name="type"
-          label="Tipo"
-          options={["Novela", "Cuento"]}
-          variant="standard"
-          value={type}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setType(e.target.value)
-          }
-        />
-
-        <CustomSelectInput
-          name="genre"
-          label="Genero"
-          options={["Negro", "Fantastico"]}
-          variant="standard"
-          value={genre}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setGenre(e.target.value)
-          }
-        />
-
-        <CustomSelectInput
-          name="illustrator"
-          label="Ilustrador"
-          options={["Maco", "Otro"]}
-          variant="standard"
-          value={illustrator}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setIllustrator(e.target.value)
-          }
-        />
-
-        <CustomSelectInput
-          name="publisher"
-          label="Editorial"
-          options={["De la paz", "Ediciones B"]}
-          variant="standard"
-          value={publisher}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setPublisher(e.target.value)
-          }
-        />
+        })}
 
         <Box component={TextField} label="CHAPTERS" />
       </Box>
 
       <Box display="grid">
-        <CustomDropzone name="cover" onDrop={handleDropCover} />
+        <CustomDropzone
+          name="cover"
+          onDrop={handleDropCover}
+          cover={cover?.url ? cover : null}
+        />
       </Box>
 
       <Box gridColumn="span 2" component={ButtonGroup} fullWidth>

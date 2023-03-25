@@ -1,6 +1,7 @@
 // global
 interface FileUploadPreview extends File {
-  preview: string
+  preview?: string
+  cover?: Image | null | undefined
 }
 
 // MODELS
@@ -10,13 +11,16 @@ type Book = {
   description?: string
   publicationDate?: string
   type?: string
+  genre?: string
+  illustrator?: string
+  publisher?: string
   cover?: Image | null | undefined
   backgroundImage?: string
 }
 
-type Image = {
+type OptionalFile = Partial<File>
+
+type Image = OptionalFile & {
   id?: number
-  filename?: string
   url?: string
-  type?: string
 }

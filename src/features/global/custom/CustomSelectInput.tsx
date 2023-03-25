@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem"
 import TextField, { TextFieldProps } from "@mui/material/TextField"
 
 interface CustomSelectInputProps {
-  options: string[]
+  options?: string[]
   [x: string]: any
 }
 
@@ -14,7 +14,7 @@ export const CustomSelectInput = ({
 }: CustomSelectInputProps) => {
   return (
     <Box {...rest} component={TextField} select>
-      {options.map((option, index) => (
+      {options!.map((option, index) => (
         <MenuItem key={index} value={option}>
           {option}
         </MenuItem>

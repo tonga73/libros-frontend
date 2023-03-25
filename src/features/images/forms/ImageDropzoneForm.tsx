@@ -2,8 +2,8 @@ import React from "react"
 import { CustomDropzone } from "../../global/custom/CustomDropzone"
 
 function ImageDropzoneForm() {
-  const handleDrop = (files: File[]) => {
-    console.log("Files dropped: ", files)
+  const handleDrop = (file: File) => {
+    console.log("File dropped: ", file)
   }
 
   const handleUploadImage = async (file: File) => {

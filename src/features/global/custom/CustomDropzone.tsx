@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   useDropzone,
   DropzoneOptions,
@@ -7,9 +7,11 @@ import {
 } from "react-dropzone"
 
 import { makeStyles } from "@mui/material"
+import { colors } from "@mui/material"
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import Divider from "@mui/material/Divider"
 import IconButton from "@mui/material/IconButton"
 import Input from "@mui/material/Input"
 import Typography from "@mui/material/Typography"
@@ -19,11 +21,12 @@ import { Add, Delete } from "@mui/icons-material"
 
 interface DropzoneProps {
   name: string
-  onDrop: (files: FileUploadPreview[]) => void
+  onDrop: (files: FileUploadPreview) => void
+  cover?: Image | undefined | null
 }
 
-export function CustomDropzone({ name, onDrop }: DropzoneProps) {
-  const [files, setFiles] = useState<FileUploadPreview[]>([])
+export function CustomDropzone({ name, onDrop, cover }: DropzoneProps) {
+  const [file, setFile] = useState<FileUploadPreview | null>(null)
 
   const handleDrop = useCallback(
     (
@@ -31,73 +34,98 @@ export function CustomDropzone({ name, onDrop }: DropzoneProps) {
       fileRejections: FileRejection[],
       event: DropEvent
     ) => {
-      const myFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
+      const myFiles = acceptedFiles.map((file) => {
+        const myFile: FileUploadPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
-      ) as FileUploadPreview[] // Convertimos el array de archivos a MyFile[]
-      setFiles(myFiles)
-      onDrop(myFiles)
+        if (cover) {
+          myFile.cover = cover
+        }
+        return myFile
+      })
+
+      console.log(myFiles)
+      setFile(null)
+      setFile(myFiles[0])
+      onDrop(myFiles[0])
     },
-    [onDrop]
+    [onDrop, cover]
   )
 
-  const handleRemove = (index: number) => {
-    const newFiles = [...files]
-    newFiles.splice(index, 1)
-    setFiles(newFiles)
-    onDrop(newFiles)
+  const handleRemove = () => {
+    if (cover) {
+      return
+    }
+
+    setFile(null)
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
   })
 
+  useEffect(() => {
+    if (cover) {
+      const updatedFile = Object.assign({}, file)
+      updatedFile.cover = cover
+      setFile(updatedFile)
+    }
+    isDragActive && setFile(null)
+  }, [cover, isDragActive])
+
   return (
     <Box
       {...getRootProps()}
       sx={{ placeItems: "center", bgcolor: "ActiveBorder" }}
     >
-      <Box component={Input} {...getInputProps({ name })} />
-      {files.length === 0 && (
-        <Box
-          display="flex"
-          height="100%"
-          width="50%"
-          mx="auto"
-          sx={{ placeItems: "center" }}
-        >
-          {isDragActive ? (
-            <Typography>Soltar la imagen ...</Typography>
-          ) : (
-            <Typography>Arrastra el archivo para la tapa del libro.</Typography>
-          )}
-        </Box>
-      )}
-      {files.length > 0 && (
-        <Box display="flex" height="100%">
-          {files.map((file, index) => (
+      {file && (file.preview || file.cover) ? (
+        <Box display="flex">
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            width="100%"
+          >
             <Box
-              key={file.name}
-              display="flex"
-              flexDirection="column"
-              justifyContent="space-between"
-            >
-              <Box
-                component="img"
-                src={file.preview}
-                alt={file.name}
-                width="100%"
-                sx={{ objectFit: "cover" }}
-              />
-              <Box py={1}>
-                <IconButton onClick={() => handleRemove(index)}>
-                  <Delete />
-                </IconButton>
-              </Box>
+              component="img"
+              src={
+                file.cover?.url
+                  ? `http://localhost:4000${file.cover.url}`
+                  : file.preview
+              }
+              alt={file.name}
+              height="50vh"
+              sx={{ objectFit: "contain" }}
+            />
+
+            <Box p={1}>
+              <Divider sx={{ bgcolor: colors.blueGrey[50] }} />
+
+              <IconButton onClick={() => handleRemove()}>
+                <Delete />
+              </IconButton>
             </Box>
-          ))}
+          </Box>
         </Box>
+      ) : (
+        <>
+          <Box component={Input} {...getInputProps({ name })} />
+          <Box
+            display="flex"
+            height="100%"
+            width="50%"
+            mx="auto"
+            sx={{ placeItems: "center" }}
+          >
+            {isDragActive ? (
+              <Typography>Soltar la imagen ...</Typography>
+            ) : (
+              <Typography>
+                Arrastra el archivo para la tapa del libro.
+              </Typography>
+            )}
+          </Box>
+        </>
       )}
     </Box>
   )
