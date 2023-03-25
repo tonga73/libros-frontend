@@ -1,18 +1,40 @@
+import client from "../service/client"
 import { selector } from "recoil"
-
-import { bookListState } from "../atoms/booksAtom"
+import {
+  bookListState,
+  bookState,
+  selectedBookIdState,
+} from "../atoms/booksAtom"
 
 export const bookListSelector = selector<Book[]>({
   key: "bookListSelector",
   get: async ({ get }) => {
-    const bookList = get(bookListState)
+    const response = await client("/books")
+    const { data } = await response
+    return data
+  },
+})
 
-    if (bookList.length === 0) {
-      const response = await fetch("http://localhost:4000/books") // Llamada a la API utilizando fetch
-      const data = await response.json()
-      return data
+export const deleteBook = selector({
+  key: "deleteBook",
+  get: ({ get }) => get(bookState),
+  set: async ({ set, get }, id) => {
+    if (typeof id !== "number") {
+      console.error("Invalid book id")
+      return
     }
-
-    return bookList
+    try {
+      const response = await client.delete(`/books/${id}`)
+      if (!response) {
+        throw new Error("Failed to delete book")
+      }
+      const books = get(bookListState)
+      set(
+        bookListState,
+        books.filter((book) => book.id !== id)
+      )
+    } catch (error) {
+      console.error(error)
+    }
   },
 })

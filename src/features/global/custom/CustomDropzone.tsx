@@ -7,25 +7,36 @@ import {
 } from "react-dropzone"
 
 import { makeStyles } from "@mui/material"
-import { colors } from "@mui/material"
+import { colors, alpha } from "@mui/material"
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Divider from "@mui/material/Divider"
 import IconButton from "@mui/material/IconButton"
 import Input from "@mui/material/Input"
+import SvgIcon from "@mui/material/SvgIcon"
 import Typography from "@mui/material/Typography"
 import Tooltip from "@mui/material/Tooltip"
 
-import { Add, Delete } from "@mui/icons-material"
+import AddIcon from "@mui/icons-material/Add"
+import DeleteIcon from "@mui/icons-material/Delete"
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate"
 
 interface DropzoneProps {
   name: string
   onDrop: (files: FileUploadPreview) => void
   cover?: Image | undefined | null
+  handleSaveImage: () => void
+  children?: JSX.Element
 }
 
-export function CustomDropzone({ name, onDrop, cover }: DropzoneProps) {
+export function CustomDropzone({
+  name,
+  onDrop,
+  cover,
+  handleSaveImage,
+  children,
+}: DropzoneProps) {
   const [file, setFile] = useState<FileUploadPreview | null>(null)
 
   const handleDrop = useCallback(
@@ -44,7 +55,6 @@ export function CustomDropzone({ name, onDrop, cover }: DropzoneProps) {
         return myFile
       })
 
-      console.log(myFiles)
       setFile(null)
       setFile(myFiles[0])
       onDrop(myFiles[0])
@@ -94,35 +104,69 @@ export function CustomDropzone({ name, onDrop, cover }: DropzoneProps) {
                   : file.preview
               }
               alt={file.name}
-              height="50vh"
+              maxHeight="45vh"
               sx={{ objectFit: "contain" }}
             />
 
-            <Box p={1}>
-              <Divider sx={{ bgcolor: colors.blueGrey[50] }} />
+            <Divider sx={{ bgcolor: colors.blueGrey[50] }} />
 
+            <Box display="flex" justifyContent="space-between" p={1}>
               <IconButton onClick={() => handleRemove()}>
-                <Delete />
+                <DeleteIcon />
               </IconButton>
+
+              <Button
+                disabled={!!file.cover?.url}
+                onClick={handleSaveImage}
+                variant="contained"
+              >
+                Guardar Tapa
+              </Button>
             </Box>
           </Box>
         </Box>
       ) : (
         <>
           <Box component={Input} {...getInputProps({ name })} />
-          <Box
-            display="flex"
-            height="100%"
-            width="50%"
-            mx="auto"
-            sx={{ placeItems: "center" }}
-          >
+          <Box display="flex" height="100%">
             {isDragActive ? (
-              <Typography>Soltar la imagen ...</Typography>
+              <Box
+                display="flex"
+                height="50vh"
+                mx="auto"
+                sx={{ placeItems: "center" }}
+              >
+                <Typography textAlign="center">
+                  Soltar la imagen para cargar ...
+                </Typography>
+              </Box>
             ) : (
-              <Typography>
-                Arrastra el archivo para la tapa del libro.
-              </Typography>
+              <Box
+                display="grid"
+                gridTemplateRows={`repeat(3, 1fr)`}
+                height="50vh"
+                gap={1}
+                p={0.5}
+              >
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  height="100%"
+                  px={1}
+                  sx={{
+                    placeItems: "center",
+                    border: `3px dashed ${alpha("#ffffff", 0.3)}`,
+                  }}
+                >
+                  <Typography textAlign="center">
+                    Arrastra aqui el archivo para la tapa del libro, o
+                    selecciona uno de la lista.
+                  </Typography>
+                </Box>
+                <Box gridRow="span 2" display="flex" mx="auto">
+                  {children}
+                </Box>
+              </Box>
             )}
           </Box>
         </>

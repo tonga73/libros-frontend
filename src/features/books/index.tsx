@@ -6,13 +6,19 @@ import { ImageGrid } from "../../components/ImageGrid"
 import { BookForm } from "./forms/BookForm"
 
 import { useRecoilState, useRecoilValue } from "recoil"
-import { bookState } from "../../atoms/booksAtom"
+import { bookState, bookListState } from "../../atoms/booksAtom"
 import { bookListSelector } from "../../selectors/booksSelector"
 import React from "react"
 
 const index = () => {
-  const bookList = useRecoilValue(bookListSelector)
+  const bookList = useRecoilValue(bookListState)
   const [book, setBook] = useRecoilState(bookState)
+
+  const covers = bookList.map(({ id, name, cover }) => ({
+    id,
+    name,
+    url: cover?.url ?? "",
+  }))
 
   const handleSelectedBook = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -30,7 +36,7 @@ const index = () => {
 
   return (
     <Box component={Container} disableGutters fixed>
-      <ImageGrid onClick={handleSelectedBook} books={bookList} />
+      <ImageGrid onClick={handleSelectedBook} images={covers} />
       <BookForm book={book} />
     </Box>
   )

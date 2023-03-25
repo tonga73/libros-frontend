@@ -21,6 +21,7 @@ type Book = {
 type OptionalFile = Partial<File>
 
 type Image = OptionalFile & {
+  bookCoverId?: number
   id?: number
   url?: string
 }

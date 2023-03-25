@@ -11,12 +11,21 @@ import TextField from "@mui/material/TextField"
 
 import FileUploadIcon from "@mui/icons-material/FileUpload"
 
-// CMS-GLOBAL CUSTOM COMPONENTS
 import { CustomSelectInput } from "../../global/custom/CustomSelectInput"
 import { CustomDropzone } from "../../global/custom/CustomDropzone"
 
+import { ImageSquares } from "../../../components/ImageSquares"
+
+import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil"
+import { uploadImageSelectorFamily } from "../../../selectors/imageSelector"
+import { imageFileState, imageListState } from "../../../atoms/imageAtom"
+
 interface BookFormProps {
   book?: Book
+}
+
+interface CustomFile extends File {
+  originalname: string
 }
 
 interface BookFormField {
@@ -39,8 +48,13 @@ export const BookForm = ({ book }: BookFormProps) => {
 
   const inputFileRefCover = useRef<HTMLInputElement>(null)
 
-  const [books, setBooks] = useState<Book[]>([])
+  const imageList = useRecoilValue(imageListState)
 
+  const covers = imageList.filter(
+    (image: Image) => !image.bookCoverId && image.type === "cover"
+  )
+
+  const [books, setBooks] = useState<Book[]>([])
   // controlled inputs
   const [name, setName] = useState(book?.name || "")
   const [description, setDescription] = useState(book?.description || "")
@@ -51,9 +65,8 @@ export const BookForm = ({ book }: BookFormProps) => {
   const [genre, setGenre] = useState(book?.genre || "")
   const [illustrator, setIllustrator] = useState(book?.illustrator || "")
   const [publisher, setPublisher] = useState(book?.publisher || "")
-  const [cover, setCover] = useState<Image | undefined | null>(
-    book?.cover || undefined
-  )
+  const [cover, setCover] = useState<Image | null>(book?.cover || null)
+  const [preview, setPreview] = useState<File | null>(null)
 
   const bookFormFields: BookFormField[] = [
     {
@@ -128,8 +141,23 @@ export const BookForm = ({ book }: BookFormProps) => {
   }
 
   const handleDropCover = (file: File) => {
-    setCover(file)
+    setPreview((preview) => file)
   }
+
+  const handleCreateImage = useRecoilCallback(
+    ({ snapshot }) =>
+      async () => {
+        const uploadImage = await snapshot.getPromise(
+          uploadImageSelectorFamily(preview)
+        )
+        if (uploadImage) {
+          console.log("Upload successful", uploadImage)
+        } else {
+          console.log("Upload failed")
+        }
+      },
+    []
+  )
 
   useEffect(() => {
     const {
@@ -216,12 +244,15 @@ export const BookForm = ({ book }: BookFormProps) => {
         <Box component={TextField} label="CHAPTERS" />
       </Box>
 
-      <Box display="grid">
+      <Box height="50vh">
         <CustomDropzone
           name="cover"
           onDrop={handleDropCover}
           cover={cover?.url ? cover : null}
-        />
+          handleSaveImage={handleCreateImage}
+        >
+          <ImageSquares images={covers} />
+        </CustomDropzone>
       </Box>
 
       <Box gridColumn="span 2" component={ButtonGroup} fullWidth>
