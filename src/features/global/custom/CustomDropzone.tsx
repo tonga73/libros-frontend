@@ -70,7 +70,7 @@ export function CustomDropzone({ name, onDrop, cover }: DropzoneProps) {
       updatedFile.cover = cover
       setFile(updatedFile)
     }
-    isDragActive && setFile(null)
+    ;(isDragActive || !cover) && setFile(null)
   }, [cover, isDragActive])
 
   return (
