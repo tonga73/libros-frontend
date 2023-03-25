@@ -7,12 +7,12 @@ import ButtonGroup from "@mui/material/ButtonGroup"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
-import { NewBook } from "./forms/NewBook"
+import { BookForm } from "./forms/BookForm"
 
 import { useRecoilValue } from "recoil"
 import { bookListSelector } from "../../../selectors/booksSelector"
 
-const Index = () => {
+const index = () => {
   const bookList = useRecoilValue(bookListSelector)
 
   return (
@@ -33,7 +33,6 @@ const Index = () => {
         display="grid"
         gridTemplateColumns={`repeat(${8}, minmax(0, 1fr))`}
         columnGap={1}
-        height="150px"
       >
         {bookList.map(({ cover, name }, index) => (
           <Box
@@ -52,10 +51,10 @@ const Index = () => {
         ))}
       </Box>
       <Box display="grid" py={1}>
-        <NewBook />
+        <BookForm />
       </Box>
     </Box>
   )
 }
 
-export default Index
+export default index

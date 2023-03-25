@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -15,13 +15,19 @@ import FileUploadIcon from "@mui/icons-material/FileUpload"
 import { CustomSelectInput } from "../../global/custom/CustomSelectInput"
 import { CustomDropzone } from "../../global/custom/CustomDropzone"
 
-export const NewBook = () => {
+export const BookForm = ({ id, name, description, publicationDate }: Book) => {
   const responseBody: { [key: string]: string } = {}
 
   const inputFileRefCover = useRef<HTMLInputElement>(null)
 
   const [books, setBooks] = useState<Book[]>([])
 
+  // controlled inputs
+  // const [name, setName] = useState(book?.name || "")
+  // const [description, setDescription] = useState(book?.description || "")
+  // const [publicationDate, setPublicationDate] = useState(
+  //   book?.publicationDate || ""
+  // )
   const [type, setType] = useState("")
   const [genre, setGenre] = useState("")
   const [illustrator, setIllustrator] = useState("")
@@ -48,6 +54,11 @@ export const NewBook = () => {
     setCover(files[0])
   }
 
+  // useEffect(() => {
+  //   setName(book?.name || "")
+  //   setDescription(book?.description || "")
+  //   setPublicationDate(book?.publicationDate || "")
+  // }, [book])
   return (
     <Box
       component={"form"}
