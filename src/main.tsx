@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <CssBaseline />
         <GlobalStyles
           styles={{
-            body: { backgroundColor: "#171717" },
+            body: { backgroundColor: "#171717", color: "white" },
           }}
         />
         <ThemeProvider theme={theme}>

@@ -9,6 +9,9 @@ interface Theme {
     secondary: {
       main: string
     }
+    text: {
+      primary: string
+    }
     background: {
       default: string
     }
@@ -25,6 +28,9 @@ const theme: Theme = createTheme({
     },
     secondary: {
       main: "#38bc95",
+    },
+    text: {
+      primary: "#ffffff",
     },
     background: {
       default: "#171717",

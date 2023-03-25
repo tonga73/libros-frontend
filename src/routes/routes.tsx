@@ -1,3 +1,4 @@
+import Books from "../features/books"
 import { Landing } from "../scenes/Landing"
 
 export const routes = [
@@ -11,7 +12,7 @@ export const routes = [
   },
   {
     path: "libros",
-    element: "LIBROS",
+    element: <Books />,
   },
   {
     path: "media",
