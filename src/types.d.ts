@@ -10,7 +10,7 @@ type Book = {
   description?: string
   publicationDate?: string
   type?: string
-  cover?: Image
+  cover?: Image | null | undefined
   backgroundImage?: string
 }
 

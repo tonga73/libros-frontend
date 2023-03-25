@@ -15,7 +15,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload"
 import { CustomSelectInput } from "../../global/custom/CustomSelectInput"
 import { CustomDropzone } from "../../global/custom/CustomDropzone"
 
-export const BookForm = ({ id, name, description, publicationDate }: Book) => {
+export const BookForm = (book: Book) => {
   const responseBody: { [key: string]: string } = {}
 
   const inputFileRefCover = useRef<HTMLInputElement>(null)
@@ -23,11 +23,11 @@ export const BookForm = ({ id, name, description, publicationDate }: Book) => {
   const [books, setBooks] = useState<Book[]>([])
 
   // controlled inputs
-  // const [name, setName] = useState(book?.name || "")
-  // const [description, setDescription] = useState(book?.description || "")
-  // const [publicationDate, setPublicationDate] = useState(
-  //   book?.publicationDate || ""
-  // )
+  const [name, setName] = useState(book?.name || "")
+  const [description, setDescription] = useState(book?.description || "")
+  const [publicationDate, setPublicationDate] = useState(
+    book?.publicationDate || ""
+  )
   const [type, setType] = useState("")
   const [genre, setGenre] = useState("")
   const [illustrator, setIllustrator] = useState("")
@@ -47,18 +47,18 @@ export const BookForm = ({ id, name, description, publicationDate }: Book) => {
       (value, property) => (responseBody[property] = value.toString())
     )
 
-    console.log(responseBody)
+    console.log("bookForm res: ", responseBody)
   }
 
   const handleDropCover = (files: File[]) => {
     setCover(files[0])
   }
 
-  // useEffect(() => {
-  //   setName(book?.name || "")
-  //   setDescription(book?.description || "")
-  //   setPublicationDate(book?.publicationDate || "")
-  // }, [book])
+  useEffect(() => {
+    setName(book?.name || "")
+    setDescription(book?.description || "")
+    setPublicationDate(book?.publicationDate || "")
+  }, [book])
   return (
     <Box
       component={"form"}
@@ -81,7 +81,15 @@ export const BookForm = ({ id, name, description, publicationDate }: Book) => {
           },
         }}
       >
-        <Box component={TextField} name="name" label="Titulo" />
+        <Box
+          component={TextField}
+          name="name"
+          label="Titulo"
+          value={name}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
+        />
 
         <Box
           component={TextField}
@@ -89,6 +97,9 @@ export const BookForm = ({ id, name, description, publicationDate }: Book) => {
           label="Descripcion"
           multiline
           rows={3}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setDescription(e.target.value)
+          }
         />
 
         <FormControl variant="filled">
