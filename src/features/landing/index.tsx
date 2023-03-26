@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography"
 
 const Landing = () => {
   return (
-    <Box display={"flex"} sx={{ bgcolor: "white", py: 3 }}>
+    <Box display={"flex"} sx={{ py: 3 }}>
       Landing
     </Box>
   )

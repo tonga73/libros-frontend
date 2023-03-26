@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import "./index.css"
 
-import { ThemeProvider, GlobalStyles, CssBaseline, css } from "@mui/material/"
-import theme from "./theme"
+import { ThemeProvider, CssBaseline } from "@mui/material/"
+import createCustomTheme from "./theme"
 
 import {
   RecoilRoot,
@@ -14,18 +14,13 @@ import {
   useRecoilValue,
 } from "recoil"
 
-const globalStyles = css`
-  body {
-    background-color: #171717;
-  }
-`
+const theme = createCustomTheme("dark")
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
       <Suspense fallback={<div>Loading whale types...</div>}>
         <CssBaseline />
-        <GlobalStyles styles={globalStyles} />
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>

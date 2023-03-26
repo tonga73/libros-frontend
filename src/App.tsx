@@ -11,20 +11,20 @@ import { AnimatePresence } from "framer-motion"
 import { Root } from "./layouts/Root"
 
 // UTILITY ELEMENTS
-import { ErrorPage } from "./scenes/ErrorPage"
+import Error404 from "./features/error-404"
 
 // MAIN ELEMENTS
 import { routes } from "./routes/routes"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" errorElement={<ErrorPage />}>
+    <Route path="/" errorElement={<Error404 />}>
+      {/* MAIN LAYOUT */}
       <Route path="/" element={<Root />}>
         {routes.map((route, index) => (
           <Route key={index} {...route} />
         ))}
       </Route>
-      {/* ... etc. */}
     </Route>
   )
 )

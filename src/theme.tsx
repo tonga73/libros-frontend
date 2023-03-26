@@ -1,28 +1,37 @@
 import { createTheme, PaletteMode } from "@mui/material"
 
-interface Theme {
-  palette: {
-    mode: PaletteMode
-    primary: {
-      main: string
+declare module "@mui/material/styles" {
+  interface Theme {
+    palette: {
+      mode: PaletteMode
+      primary: {
+        main: string
+      }
+      secondary: {
+        main: string
+      }
+      text: {
+        primary: string
+      }
+      background: {
+        default: string
+        main: string
+      }
     }
-    secondary: {
-      main: string
-    }
-    text: {
-      primary: string
-    }
-    background: {
-      default: string
+    typography: {
+      fontFamily: {} | undefined
     }
   }
-  typography: {
-    fontFamily: {} | undefined
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    status?: {
+      danger?: string
+    }
   }
 }
 
-const theme: Theme = createTheme({
-  palette: {
+const palette = {
+  dark: {
     primary: {
       main: "#FFCC33",
     },
@@ -34,9 +43,74 @@ const theme: Theme = createTheme({
     },
     background: {
       default: "#171717",
+      main: "#ff0000",
     },
   },
-  typography: { fontFamily: "Reggae One", allVariants: { color: "#fffcf2" } },
-})
+  light: {
+    primary: {
+      main: "#1976d2",
+    },
+    secondary: {
+      main: "#dc004e",
+    },
+    text: {
+      primary: "#333",
+    },
+    background: {
+      default: "#fff",
+    },
+  },
+  rainbow: {
+    primary: {
+      main: "#ff0000",
+    },
+    secondary: {
+      main: "#ffa500",
+    },
+    text: {
+      primary: "#ffff00",
+    },
+    background: {
+      default: "#333333",
+    },
+  },
+}
 
-export default theme
+const createCustomTheme = (themeName: string) => {
+  switch (themeName) {
+    case "dark":
+      return createTheme({
+        palette: palette.dark,
+        typography: {
+          fontFamily: "Reggae One",
+          allVariants: { color: "#FF0000" },
+        },
+      })
+    case "light":
+      return createTheme({
+        palette: palette.light,
+        typography: {
+          fontFamily: "Reggae One",
+          allVariants: { color: "#333" },
+        },
+      })
+    case "rainbow":
+      return createTheme({
+        palette: palette.rainbow,
+        typography: {
+          fontFamily: "Reggae One",
+          allVariants: { color: "#ffff00" },
+        },
+      })
+    default:
+      return createTheme({
+        palette: palette.light,
+        typography: {
+          fontFamily: "Reggae One",
+          allVariants: { color: "#333" },
+        },
+      })
+  }
+}
+
+export default createCustomTheme

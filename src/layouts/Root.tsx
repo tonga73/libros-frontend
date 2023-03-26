@@ -1,17 +1,16 @@
 import React from "react"
 import { Outlet } from "react-router-dom"
 
-import Box from "@mui/material/Box"
-import { useTheme } from "@mui/material"
+import { useTheme } from "@emotion/react"
 
-import TopBar from "../scenes/TopBar"
+import Box from "@mui/material/Box"
+
+import Header from "../components/Header"
 
 export const Root = () => {
-  const theme = useTheme()
-
   return (
     <Box>
-      <TopBar />
+      <Header />
       <Outlet />
     </Box>
   )
