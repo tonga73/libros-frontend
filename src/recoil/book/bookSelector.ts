@@ -1,10 +1,6 @@
-import client from "../service/client"
+import client from "../../api/client"
 import { selector } from "recoil"
-import {
-  bookListState,
-  bookState,
-  selectedBookIdState,
-} from "../atoms/booksAtom"
+import { bookListState, bookState, selectedBookIdState } from "./bookAtom"
 
 export const bookListSelector = selector<Book[]>({
   key: "bookListSelector",

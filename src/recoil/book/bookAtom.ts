@@ -1,6 +1,6 @@
 import { atom } from "recoil"
 
-import { bookListSelector } from "../selectors/booksSelector"
+import { bookListSelector } from "./bookSelector"
 
 export const selectedBookIdState = atom<number | undefined>({
   key: "selectedBookIdState",

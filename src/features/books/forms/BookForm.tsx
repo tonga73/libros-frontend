@@ -17,8 +17,8 @@ import { CustomDropzone } from "../../global/custom/CustomDropzone"
 import { ImageSquares } from "../../../components/ImageSquares"
 
 import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil"
-import { uploadImageSelectorFamily } from "../../../selectors/imageSelector"
-import { imageFileState, imageListState } from "../../../atoms/imageAtom"
+import { uploadImageSelectorFamily } from "../../../recoil/image/imageSelector"
+import { imageFileState, imageListState } from "../../../recoil/image/imageAtom"
 
 interface BookFormProps {
   book?: Book

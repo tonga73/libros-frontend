@@ -1,5 +1,5 @@
 import Books from "../features/books"
-import { Landing } from "../scenes/Landing"
+import Landing from "../features/landing"
 
 export const routes = [
   {

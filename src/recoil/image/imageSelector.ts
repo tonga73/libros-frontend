@@ -1,11 +1,11 @@
-import client from "../service/client"
+import client from "../../api/client"
 import {
   selector,
   selectorFamily,
   GetRecoilValue,
   SetRecoilState,
 } from "recoil"
-import { imageFileState, imageListState } from "../atoms/imageAtom"
+import { imageFileState, imageListState } from "./imageAtom"
 
 export const imageListSelector = selector<Image[]>({
   key: "imageListSelector",

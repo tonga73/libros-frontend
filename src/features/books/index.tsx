@@ -6,11 +6,11 @@ import { ImageGrid } from "../../components/ImageGrid"
 import { BookForm } from "./forms/BookForm"
 
 import { useRecoilState, useRecoilValue } from "recoil"
-import { bookState, bookListState } from "../../atoms/booksAtom"
-import { bookListSelector } from "../../selectors/booksSelector"
+import { bookState, bookListState } from "../../recoil/book/bookAtom"
+import { bookListSelector } from "../../recoil/book/bookSelector"
 import React from "react"
 
-const index = () => {
+const Books = () => {
   const bookList = useRecoilValue(bookListState)
   const [book, setBook] = useRecoilState(bookState)
 
@@ -42,4 +42,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Books
