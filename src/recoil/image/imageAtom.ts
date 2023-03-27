@@ -1,6 +1,15 @@
 import { atom } from "recoil"
 
-import { imageListSelector } from "../selectors/imageSelector"
+interface SelectedImage {
+  id: number | null
+}
+
+export const imageSelectedState = atom<SelectedImage>({
+  key: "imageFileState",
+  default: {
+    id: null,
+  },
+})
 
 export const imageFileState = atom<File | null>({
   key: "imageFileState",

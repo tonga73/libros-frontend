@@ -11,7 +11,7 @@ import { AnimatePresence } from "framer-motion"
 import { Root } from "./layouts/Root"
 
 // UTILITY ELEMENTS
-import Error404 from "./features/error-404"
+import Error404 from "./features/error-404/Error404"
 
 // MAIN ELEMENTS
 import { routes } from "./routes/routes"

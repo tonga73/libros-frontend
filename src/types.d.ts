@@ -24,4 +24,5 @@ type Image = OptionalFile & {
   bookCoverId?: number
   id?: number
   url?: string
+  filename: string
 }

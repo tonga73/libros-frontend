@@ -31,7 +31,7 @@ const Carousel = ({ books }: CarouselProps) => {
     <Box
       display="grid"
       sx={{
-        backgroundImage: `url(${book.backgroundImage})`,
+        backgroundImage: `url(http://localhost:4000${book.backgroundImage})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: { xs: "30%", lg: "center" },
@@ -72,7 +72,7 @@ const Carousel = ({ books }: CarouselProps) => {
             {book.type}
           </Typography>
           <Typography variant="h2" lineHeight="110%">
-            {book.title}
+            {book.name}
           </Typography>
           <Typography variant="h5" fontWeight="bold" fontFamily="bellefair">
             {book.description}
@@ -95,9 +95,9 @@ const Carousel = ({ books }: CarouselProps) => {
           <AnimatePresence mode="popLayout">
             <Box
               component={motion.img}
-              key={book.title}
-              src={book.coverImage}
-              alt={book.title}
+              key={book.name}
+              src={`http://localhost:4000${book.cover?.url}`}
+              alt={book.name}
               onDragEnd={next}
               sx={{
                 height: {
@@ -118,9 +118,9 @@ const Carousel = ({ books }: CarouselProps) => {
             />
             <Box
               component={motion.img}
-              key={book.title + "_next"}
-              src={nextBook.coverImage}
-              alt={nextBook.title}
+              key={book.name + "_next"}
+              src={nextBook.cover?.url}
+              alt={nextBook.name}
               onClick={next}
               sx={{
                 height: {

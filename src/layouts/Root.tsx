@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import { Outlet } from "react-router-dom"
 
 import { useTheme } from "@emotion/react"
@@ -11,7 +11,9 @@ export const Root = () => {
   return (
     <Box>
       <Header />
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </Box>
   )
 }

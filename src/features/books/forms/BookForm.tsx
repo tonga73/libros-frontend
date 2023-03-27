@@ -11,8 +11,8 @@ import TextField from "@mui/material/TextField"
 
 import FileUploadIcon from "@mui/icons-material/FileUpload"
 
-import { CustomSelectInput } from "../../global/custom/CustomSelectInput"
-import { CustomDropzone } from "../../global/custom/CustomDropzone"
+import { CustomSelectInput } from "../../../components/CustomSelectInput"
+import { CustomDropzone } from "../../../components/CustomDropzone"
 
 import { ImageSquares } from "../../../components/ImageSquares"
 

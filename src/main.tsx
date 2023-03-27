@@ -19,12 +19,10 @@ const theme = createCustomTheme("dark")
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <Suspense fallback={<div>Loading whale types...</div>}>
-        <CssBaseline />
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </Suspense>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>
 )

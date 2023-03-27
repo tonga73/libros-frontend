@@ -1,5 +1,6 @@
-import Books from "../features/books"
-import Landing from "../features/landing"
+import Books from "../features/books/Books"
+import Landing from "../features/landing/Landing"
+import Media from "../features/media/Media"
 
 export const routes = [
   {
@@ -16,7 +17,7 @@ export const routes = [
   },
   {
     path: "media",
-    element: "MEDIA",
+    element: <Media />,
   },
   {
     path: "contacto",

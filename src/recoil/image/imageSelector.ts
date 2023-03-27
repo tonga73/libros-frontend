@@ -5,24 +5,37 @@ import {
   GetRecoilValue,
   SetRecoilState,
 } from "recoil"
-import { imageFileState, imageListState } from "./imageAtom"
+import { imageFileState, imageListState, imageSelectedState } from "./imageAtom"
 
 export const imageListSelector = selector<Image[]>({
   key: "imageListSelector",
   get: async ({ get }) => {
-    const response = await client("/images")
-    const { data } = await response
+    const response = await client(`/images`)
+    const { data } = response
+
     return data
   },
+})
+
+export const imageSelector = selectorFamily<Image | undefined, number>({
+  key: "imageSelector",
+  get:
+    (id) =>
+    async ({ get }) => {
+      const response = await client(`/images/single/${id}`)
+      const { data } = response
+
+      return data
+    },
 })
 
 export const deleteImageSelector = selector({
   key: "deleteImageSelector",
   get: async ({ get }) => {},
-  set: async ({ set }, id) => {
+  set: async ({ set }) => {
     try {
-      await client.delete(`/images/${id}`)
-      set(imageFileState, null)
+      const response = await client.delete(`/images/${imageFileState}`)
+      set(imageFileState, response.data)
     } catch (error) {
       console.log(error)
     }

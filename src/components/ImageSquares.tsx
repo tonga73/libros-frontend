@@ -1,4 +1,3 @@
-import * as React from "react"
 import Box from "@mui/material/Box"
 import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
@@ -6,16 +5,27 @@ import Typography from "@mui/material/Typography"
 
 import HideImageIcon from "@mui/icons-material/HideImage"
 
-import { useRecoilValue } from "recoil"
-import { imageListState } from "../atoms/imageAtom"
+import { ImageDetails } from "./ImageDetails"
 
 interface ImageSquaresProps {
   images: Image[]
+  cols?: number
+  rowHeight?: number
+  withDetails?: boolean
 }
 
-export const ImageSquares = ({ images }: ImageSquaresProps) =>
+export const ImageSquares = ({
+  images,
+  cols,
+  rowHeight,
+  withDetails,
+}: ImageSquaresProps) =>
   images.length > 0 ? (
-    <ImageList sx={{ width: "100%" }} cols={3} rowHeight={"auto"}>
+    <ImageList
+      sx={{ width: "100%" }}
+      cols={cols || 3}
+      rowHeight={withDetails ? rowHeight || "auto" : rowHeight || 200}
+    >
       {images.map(({ id, url }, index) => (
         <ImageListItem key={index} sx={{ cursor: "pointer" }}>
           <img
@@ -25,6 +35,7 @@ export const ImageSquares = ({ images }: ImageSquaresProps) =>
             alt={url}
             loading="lazy"
           />
+          {withDetails ? <ImageDetails id={id!} /> : null}
         </ImageListItem>
       ))}
     </ImageList>
