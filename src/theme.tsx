@@ -43,7 +43,7 @@ const palette = {
     },
     background: {
       default: "#171717",
-      main: "#ff0000",
+      main: "#f2f2f2",
     },
   },
   light: {
@@ -83,7 +83,7 @@ const createCustomTheme = (themeName: string) => {
         palette: palette.dark,
         typography: {
           fontFamily: "Reggae One",
-          allVariants: { color: "#FF0000" },
+          allVariants: { color: "#f2f2f2" },
         },
       })
     case "light":
