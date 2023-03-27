@@ -5,7 +5,7 @@ import Box from "@mui/material/Box"
 
 type ImageGridProps = {
   onClick: (e: React.MouseEvent<HTMLElement>) => void
-  images?: Image[]
+  images: Image[]
 }
 
 export const ImageGrid = ({ onClick, images = [] }: ImageGridProps) => {
