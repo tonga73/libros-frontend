@@ -10,6 +10,10 @@ declare module "@mui/material/styles" {
       secondary: {
         main: string
       }
+      common: {
+        white: string
+        black: string
+      }
       text: {
         primary: string
       }
@@ -37,6 +41,10 @@ const palette = {
     },
     secondary: {
       main: "#38bc95",
+    },
+    common: {
+      white: "#fff",
+      black: "#000",
     },
     text: {
       primary: "#fffcf2",

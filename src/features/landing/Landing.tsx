@@ -12,7 +12,7 @@ const Landing = () => {
   const bookList = useRecoilValue(bookListState)
 
   return (
-    <Box display={"flex"} sx={{ py: 3 }}>
+    <Box display={"flex"}>
       <Carousel books={bookList} />
     </Box>
   )

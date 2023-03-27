@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 import { useTheme } from "@mui/material"
 import AppBar from "@mui/material/AppBar"
@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const theme = useTheme()
+  const location = useLocation()
 
   // CLOGS
   console.log("THEME ", theme)
@@ -46,7 +47,7 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar position="fixed" color="transparent" elevation={0}>
         <Toolbar
           sx={{
             display: "grid",
@@ -72,6 +73,13 @@ const Header = () => {
                 component={Link}
                 color="inherit"
                 to={item.link}
+                sx={{
+                  color: theme.palette.common.white,
+                  opacity: location.pathname === item.link ? 1 : 0.5,
+                  "&:hover": {
+                    opacity: 1,
+                  },
+                }}
               >
                 {item.text}
               </Button>

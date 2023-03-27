@@ -15,7 +15,7 @@ type Book = {
   illustrator?: string
   publisher?: string
   cover?: Image | null | undefined
-  backgroundImage?: string
+  secondaryImage?: Image
 }
 
 type OptionalFile = Partial<File>

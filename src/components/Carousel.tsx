@@ -27,11 +27,12 @@ const Carousel = ({ books }: CarouselProps) => {
   const book = books[activeIndex]
   const nextBook = books[activeIndex < books.length - 1 ? activeIndex + 1 : 0]
 
+  console.log("book ", book)
   return (
     <Box
       display="grid"
       sx={{
-        backgroundImage: `url(http://localhost:4000${book.backgroundImage})`,
+        backgroundImage: `url(http://localhost:4000${book.secondaryImage?.url})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: { xs: "30%", lg: "center" },
@@ -118,8 +119,8 @@ const Carousel = ({ books }: CarouselProps) => {
             />
             <Box
               component={motion.img}
-              key={book.name + "_next"}
-              src={nextBook.cover?.url}
+              key={nextBook.name + "_next"}
+              src={`http://localhost:4000${nextBook.cover?.url}`}
               alt={nextBook.name}
               onClick={next}
               sx={{
