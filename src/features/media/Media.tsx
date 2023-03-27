@@ -14,8 +14,6 @@ import {
 const Media = () => {
   const imageList = useRecoilValue(imageListSelector)
 
-  // console.log("IMGLIST ", imageList)
-
   return (
     <Box component={Container} disableGutters>
       <ImageSquares images={imageList} cols={5} withDetails />

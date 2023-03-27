@@ -5,7 +5,7 @@ interface SelectedImage {
 }
 
 export const imageSelectedState = atom<SelectedImage>({
-  key: "imageFileState",
+  key: "selectedImageState",
   default: {
     id: null,
   },

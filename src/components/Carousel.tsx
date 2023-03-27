@@ -27,7 +27,6 @@ const Carousel = ({ books }: CarouselProps) => {
   const book = books[activeIndex]
   const nextBook = books[activeIndex < books.length - 1 ? activeIndex + 1 : 0]
 
-  console.log("book ", book)
   return (
     <Box
       display="grid"

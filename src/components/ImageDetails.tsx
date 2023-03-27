@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 
-import { useRecoilValue, useRecoilState } from "recoil"
-import { imageSelectedState } from "../recoil/image/imageAtom"
+import { useRecoilValue } from "recoil"
 import { imageSelector } from "../recoil/image/imageSelector"
 
 interface ImageDetailsProps {
@@ -12,8 +11,6 @@ interface ImageDetailsProps {
 
 export const ImageDetails = ({ id }: ImageDetailsProps) => {
   const image = useRecoilValue(imageSelector(id))
-
-  console.log("UN PEDAZO DE MI ENORME ", image)
 
   return <div>{image ? image.filename : "SIN DETALLES"}</div>
 }

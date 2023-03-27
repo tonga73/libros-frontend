@@ -14,8 +14,6 @@ const Books = () => {
   const bookList = useRecoilValue(bookListState)
   const [book, setBook] = useRecoilState(bookState)
 
-  console.log(bookList)
-
   const covers = bookList.map(({ id, name, cover }) => ({
     id,
     name,

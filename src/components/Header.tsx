@@ -20,9 +20,6 @@ const Header = () => {
   const theme = useTheme()
   const location = useLocation()
 
-  // CLOGS
-  console.log("THEME ", theme)
-
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
   }
