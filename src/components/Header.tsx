@@ -44,7 +44,15 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="fixed" color="transparent" elevation={0}>
+      <AppBar
+        position="fixed"
+        color="transparent"
+        elevation={0}
+        sx={{
+          background:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0))",
+        }}
+      >
         <Toolbar
           sx={{
             display: "grid",
