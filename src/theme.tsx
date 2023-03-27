@@ -3,7 +3,6 @@ import { createTheme, PaletteMode } from "@mui/material"
 declare module "@mui/material/styles" {
   interface Theme {
     palette: {
-      mode: PaletteMode
       primary: {
         main: string
       }
@@ -20,6 +19,7 @@ declare module "@mui/material/styles" {
       background: {
         default: string
         main: string
+        paper: string
       }
     }
     typography: {
@@ -51,7 +51,6 @@ const palette = {
     },
     background: {
       default: "#171717",
-      main: "#f2f2f2",
     },
   },
   light: {
@@ -65,7 +64,7 @@ const palette = {
       primary: "#333",
     },
     background: {
-      default: "#fff",
+      default: "#ffffff",
     },
   },
   rainbow: {

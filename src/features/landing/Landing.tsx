@@ -1,9 +1,9 @@
 import React from "react"
 
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
 
-import Carousel from "../../components/Carousel"
+import { Carousel } from "../../components/Carousel"
+import { ChapterTextCard } from "../../components/ChapterTextCard"
 
 import { useRecoilValue } from "recoil"
 import { bookListState } from "../../recoil/book/bookAtom"
@@ -12,8 +12,9 @@ const Landing = () => {
   const bookList = useRecoilValue(bookListState)
 
   return (
-    <Box display={"flex"}>
+    <Box display={"grid"}>
       <Carousel books={bookList} />
+      <ChapterTextCard />
     </Box>
   )
 }

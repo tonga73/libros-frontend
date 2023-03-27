@@ -1,3 +1,4 @@
+import { useState, useMemo } from "react"
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -5,7 +6,13 @@ import {
   RouterProvider,
 } from "react-router-dom"
 
+import { ThemeProvider, CssBaseline } from "@mui/material/"
+import createCustomTheme from "./theme"
+
 import { AnimatePresence } from "framer-motion"
+
+import { useRecoilValue } from "recoil"
+import { themeState } from "./recoil/theme/themeAtom"
 
 // Layouts
 import { Root } from "./layouts/Root"
@@ -30,7 +37,16 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  return <RouterProvider router={router} />
+  const themeMode = useRecoilValue(themeState)
+
+  return (
+    <>
+      <ThemeProvider theme={createCustomTheme(themeMode)}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </>
+  )
 }
 
 export default App

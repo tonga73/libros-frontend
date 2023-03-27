@@ -3,8 +3,7 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import "./index.css"
 
-import { ThemeProvider, CssBaseline } from "@mui/material/"
-import createCustomTheme from "./theme"
+import { ThemeProvider, GlobalStyles, CssBaseline, css } from "@mui/material/"
 
 import {
   RecoilRoot,
@@ -14,15 +13,10 @@ import {
   useRecoilValue,
 } from "recoil"
 
-const theme = createCustomTheme("dark")
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <App />
     </RecoilRoot>
   </React.StrictMode>
 )

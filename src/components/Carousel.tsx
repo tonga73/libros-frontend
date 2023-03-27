@@ -10,7 +10,7 @@ type CarouselProps = {
   books: Book[]
 }
 
-const Carousel = ({ books }: CarouselProps) => {
+export const Carousel = ({ books }: CarouselProps) => {
   const size = useWindowSize()
   const { height, width } = size
 
@@ -150,5 +150,3 @@ const Carousel = ({ books }: CarouselProps) => {
     </Box>
   )
 }
-
-export default Carousel
