@@ -67,7 +67,7 @@ const Carousel = ({ books }: CarouselProps) => {
               md: "20%",
             },
             py: { xs: 3, lg: 0 },
-            px: { xs: 1.5, lg: 0 },
+            px: { xs: 1.5 },
           }}
         >
           <Typography variant="h6" fontFamily="cinzel" fontWeight="bold">
