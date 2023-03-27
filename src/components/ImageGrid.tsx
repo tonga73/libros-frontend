@@ -19,7 +19,7 @@ export const ImageGrid = ({ onClick, images = [] }: ImageGridProps) => {
             component={motion.img}
             src={
               url
-                ? `http://localhost:4000${url}`
+                ? `${import.meta.env.VITE_API_URL}${url}`
                 : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
             }
             height="250px"

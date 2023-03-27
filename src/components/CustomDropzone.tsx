@@ -100,7 +100,7 @@ export function CustomDropzone({
               component="img"
               src={
                 file.cover?.url
-                  ? `http://localhost:4000${file.cover.url}`
+                  ? `${import.meta.env.VITE_API_URL}${file.cover.url}`
                   : file.preview
               }
               alt={file.name}
