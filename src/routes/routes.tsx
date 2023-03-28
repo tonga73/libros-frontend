@@ -2,7 +2,15 @@ import Books from "../features/books/Books"
 import Landing from "../features/landing/Landing"
 import Media from "../features/media/Media"
 
-export const routes = [
+export const mainRoutes = [
+  { text: "Inicio", link: "/" },
+  { text: "Bio", link: "/bio" },
+  { text: "Libros", link: "/libros" },
+  { text: "Media", link: "/media" },
+  { text: "Contacto", link: "/contacto" },
+]
+
+const routes = [
   {
     index: true,
     element: <Landing />,
@@ -24,3 +32,5 @@ export const routes = [
     element: "CONTACTO",
   },
 ]
+
+export default routes

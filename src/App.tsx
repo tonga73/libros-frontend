@@ -21,7 +21,7 @@ import { Root } from "./layouts/Root"
 import Error404 from "./features/error-404/Error404"
 
 // MAIN ELEMENTS
-import { routes } from "./routes/routes"
+import routes from "./routes/routes"
 
 const router = createBrowserRouter(
   createRoutesFromElements(

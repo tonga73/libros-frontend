@@ -34,7 +34,7 @@ interface SocialLinksProps {
   url: string
 }
 
-export const SocialLinks = () => {
+const SocialLinks = () => {
   const { palette: colors } = useTheme()
 
   return (
@@ -55,3 +55,5 @@ export const SocialLinks = () => {
     </Box>
   )
 }
+
+export default SocialLinks

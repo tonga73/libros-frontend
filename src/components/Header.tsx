@@ -10,14 +10,16 @@ import Container from "@mui/material/Container"
 import Drawer from "@mui/material/Drawer"
 import IconButton from "@mui/material/IconButton"
 import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
+import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 
 import MenuIcon from "@mui/icons-material/Menu"
 
-import { SocialLinks } from "./SocialLinks"
+import SocialLinks from "./SocialLinks"
+
+import { mainRoutes } from "../routes/routes"
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -30,20 +32,17 @@ const Header = () => {
     setDrawerOpen(!drawerOpen)
   }
 
-  const menuItems = [
-    { text: "Inicio", link: "/" },
-    { text: "Bio", link: "/bio" },
-    { text: "Libros", link: "/libros" },
-    { text: "Media", link: "/media" },
-    { text: "Contacto", link: "/contacto" },
-  ]
-
   const drawerContent = (
-    <List>
-      {menuItems.map((item, index) => (
-        <ListItem button key={index} component="a" href={item.link}>
-          <ListItemText primary={item.text} />
-        </ListItem>
+    <List component={Box} textAlign="right">
+      {mainRoutes.map((item, index) => (
+        <ListItemButton
+          key={index}
+          component={Link}
+          to={item.link}
+          onClick={toggleDrawer}
+        >
+          <ListItemText primary={item.text} sx={{ textAlign: "right" }} />
+        </ListItemButton>
       ))}
     </List>
   )
@@ -81,7 +80,7 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
             <Box sx={{ display: { xs: "none", lg: "flex" } }}>
-              {menuItems.map((item, index) => (
+              {mainRoutes.map((item, index) => (
                 <Button
                   key={index}
                   component={Link}
@@ -135,7 +134,12 @@ const Header = () => {
         anchor="left"
         open={drawerOpen}
         onClose={toggleDrawer}
-        PaperProps={{ sx: { width: theme.breakpoints.values.sm } }}
+        PaperProps={{
+          sx: {
+            width: theme.breakpoints.values.sm,
+            bgcolor: theme.palette.background.default,
+          },
+        }}
       >
         {drawerContent}
       </Drawer>
