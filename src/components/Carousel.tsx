@@ -87,6 +87,7 @@ export const Carousel = ({ books }: CarouselProps) => {
           gap={3}
           sx={{
             alignItems: "center",
+            perspective: "300px",
             transform: {
               xs: "translateX(25%)",
               md: "translateX(30%)",
@@ -119,31 +120,39 @@ export const Carousel = ({ books }: CarouselProps) => {
               draggable
             />
             <Box
-              component={motion.img}
-              key={nextBook.name + "_next"}
-              src={`${import.meta.env.VITE_API_URL}${nextBook.cover?.url}`}
-              alt={nextBook.name}
-              onClick={next}
               sx={{
-                height: {
-                  xs: (height! / 5) * 2,
-                  md: (height! / 5) * 2.5,
-                  lg: (height! / 5) * 3,
-                },
                 position: "relative",
                 margin: "0 auto",
                 cursor: "pointer",
+                p: 5,
+                transformStyle: "preserve-3d",
+                transform: "rotateY(-10deg) translateX(15%)",
+                transition: "all ease-in-out 300ms",
                 "&:hover": {
-                  transform: "scale(105%)",
-                  opacity: 0.3,
+                  transform: "rotateY(0deg) translateX(0%) scale(110%)",
                 },
               }}
-              layout="position"
-              initial={{ x: 25, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -25, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            />
+            >
+              <Box
+                component={motion.img}
+                key={nextBook.name + "_next"}
+                src={`${import.meta.env.VITE_API_URL}${nextBook.cover?.url}`}
+                alt={nextBook.name}
+                onClick={next}
+                sx={{
+                  height: {
+                    xs: (height! / 5) * 2,
+                    md: (height! / 5) * 2.5,
+                    lg: (height! / 5) * 3,
+                  },
+                }}
+                layout="position"
+                initial={{ x: 25, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -25, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+            </Box>
           </AnimatePresence>
         </Box>
       </Box>
