@@ -5,6 +5,7 @@ import { useTheme } from "@emotion/react"
 
 import Box from "@mui/material/Box"
 
+import Footer from "../components/Footer"
 import Header from "../components/Header"
 
 export const Root = () => {
@@ -14,6 +15,7 @@ export const Root = () => {
       <Suspense>
         <Outlet />
       </Suspense>
+      <Footer />
     </Box>
   )
 }

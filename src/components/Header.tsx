@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography"
 
 import MenuIcon from "@mui/icons-material/Menu"
 
+import NavigationList from "./NavigationList"
 import SocialLinks from "./SocialLinks"
 
 import { mainRoutes } from "../routes/routes"
@@ -32,20 +33,7 @@ const Header = () => {
     setDrawerOpen(!drawerOpen)
   }
 
-  const drawerContent = (
-    <List component={Box} textAlign="right">
-      {mainRoutes.map((item, index) => (
-        <ListItemButton
-          key={index}
-          component={Link}
-          to={item.link}
-          onClick={toggleDrawer}
-        >
-          <ListItemText primary={item.text} sx={{ textAlign: "right" }} />
-        </ListItemButton>
-      ))}
-    </List>
-  )
+  const drawerContent = <NavigationList routes={mainRoutes} />
 
   return (
     <>
@@ -80,27 +68,29 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
             <Box sx={{ display: { xs: "none", lg: "flex" } }}>
-              {mainRoutes.map((item, index) => (
+              {mainRoutes.map(({ link, text }, index) => (
                 <Button
                   key={index}
                   component={Link}
-                  color="inherit"
-                  to={item.link}
+                  to={link}
                   disableRipple
+                  variant="text"
+                  color="inherit"
                   sx={{
                     color:
-                      location.pathname === item.link
+                      location.pathname === link
                         ? alpha(theme.palette.common.white, 1)
                         : alpha(theme.palette.common.white, 0.5),
                     "&:hover": {
+                      bgcolor: "transparent",
                       color:
-                        location.pathname === item.link
+                        location.pathname === link
                           ? null
                           : alpha(theme.palette.common.white, 0.7),
                     },
                   }}
                 >
-                  {item.text}
+                  {text}
                 </Button>
               ))}
             </Box>

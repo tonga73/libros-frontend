@@ -4,6 +4,11 @@ interface FileUploadPreview extends File {
   cover?: Image | null | undefined
 }
 
+interface Navigation {
+  routes: { link: string; text: string }[]
+  onClick?: () => void
+}
+
 // MODELS
 type Book = {
   id?: number
