@@ -7,12 +7,13 @@ interface Options {
   message?: string
   noAnimation?: boolean
   noDots?: boolean
+  height?: string
 }
 
-export const Loading = ({ message, noAnimation, noDots }: Options) => {
+export const Loading = ({ message, noAnimation, noDots, height }: Options) => {
   return (
     <Box
-      height="75vh"
+      height={height || "75vh"}
       display="flex"
       justifyContent="center"
       alignItems="center"
