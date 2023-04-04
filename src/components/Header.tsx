@@ -33,7 +33,9 @@ const Header = () => {
     setDrawerOpen(!drawerOpen)
   }
 
-  const drawerContent = <NavigationList routes={mainRoutes} />
+  const drawerContent = (
+    <NavigationList routes={mainRoutes} onClick={toggleDrawer} />
+  )
 
   return (
     <>
