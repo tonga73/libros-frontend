@@ -5,12 +5,14 @@ import { useTheme } from "@emotion/react"
 
 import Box from "@mui/material/Box"
 
+import FloatingAlert from "../components/FloatingAlert"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 
 export const Root = () => {
   return (
     <Box>
+      <FloatingAlert />
       <Header />
       <Suspense>
         <Outlet />

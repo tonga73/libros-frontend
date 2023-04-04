@@ -1,13 +1,39 @@
 import client from "../../api/client"
-import { selector } from "recoil"
-import { bookListState, bookState, selectedBookIdState } from "./bookAtom"
+import { selector, SetRecoilState } from "recoil"
+import {
+  bookListState,
+  bookState,
+  bookDataState,
+  selectedBookIdState,
+  isCompletedAtom,
+  isLoadingAtom,
+} from "./bookAtom"
 
 export const bookListSelector = selector<Book[]>({
   key: "bookListSelector",
   get: async ({ get }) => {
     const response = await client("/books")
-    const { data } = await response
+    const { data } = response
     return data
+  },
+})
+
+export const createBookSelector = selector({
+  key: "createBookSelector",
+  get: async ({ get }) => {
+    const bookData = get(bookDataState)
+    return client.post("/books", bookData).then((response) => response.data)
+  },
+  set: ({ set }, bookData) => {
+    set(isLoadingAtom, true) // set isLoading to true
+    set(isCompletedAtom, false) // set isCompleted to false
+    set(createBookSelector, async ({ get, set }) => {
+      const response = await client.post("/books", bookData)
+      const { data } = response
+      set(isLoadingAtom, false) // set isLoading to false
+      set(isCompletedAtom, true) // set isCompleted to true
+      return data
+    })
   },
 })
 

@@ -1,7 +1,7 @@
 // global
 interface FileUploadPreview extends File {
   preview?: string
-  cover?: Image | null | undefined
+  cover?: string
 }
 
 interface Navigation {
@@ -19,8 +19,8 @@ type Book = {
   genre?: string
   illustrator?: string
   publisher?: string
-  cover?: Image | null | undefined
-  secondaryImage?: Image
+  cover?: string
+  secondaryImage?: string
 }
 
 type OptionalFile = Partial<File>

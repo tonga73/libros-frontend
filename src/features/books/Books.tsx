@@ -1,23 +1,33 @@
+import React, { useState } from "react"
 import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
+import Button from "@mui/material/Button"
+import ButtonGroup from "@mui/material/ButtonGroup"
 
 import { ImageGrid } from "../../components/ImageGrid"
 
 import { BookForm } from "./forms/BookForm"
 
 import { useRecoilState, useRecoilValue } from "recoil"
-import { bookState, bookListState } from "../../recoil/book/bookAtom"
-import { bookListSelector } from "../../recoil/book/bookSelector"
-import React from "react"
+import {
+  bookDataState,
+  bookState,
+  bookListState,
+} from "../../recoil/book/bookAtom"
+import {
+  bookListSelector,
+  createBookSelector,
+} from "../../recoil/book/bookSelector"
 
 const Books = () => {
   const bookList = useRecoilValue(bookListState)
   const [book, setBook] = useRecoilState(bookState)
+  const [newBookMode, setNewBookMode] = useState(false)
 
   const covers = bookList.map(({ id, name, cover }) => ({
     id,
     name,
-    url: cover?.url ?? "",
+    cover,
   }))
 
   const handleSelectedBook = (e: React.MouseEvent<HTMLElement>) => {
@@ -35,9 +45,25 @@ const Books = () => {
   }
 
   return (
-    <Box component={Container} disableGutters fixed>
-      <ImageGrid onClick={handleSelectedBook} images={covers} />
-      <BookForm book={book} />
+    <Box component={Container} disableGutters fixed p={3}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        sx={{ placeSelf: "center" }}
+      >
+        <Button
+          size="small"
+          onClick={() => setNewBookMode(!newBookMode)}
+          color={newBookMode ? "inherit" : "secondary"}
+        >
+          {newBookMode ? "Cancelar" : "Crear Libro"}
+        </Button>
+      </Box>
+      {newBookMode ? (
+        <BookForm book={book} />
+      ) : (
+        <ImageGrid onClick={handleSelectedBook} images={covers} />
+      )}
     </Box>
   )
 }

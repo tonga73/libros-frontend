@@ -14,10 +14,13 @@ import FileUploadIcon from "@mui/icons-material/FileUpload"
 import { CustomSelectInput } from "../../../components/CustomSelectInput"
 import { CustomDropzone } from "../../../components/CustomDropzone"
 
-import { ImageSquares } from "../../../components/ImageSquares"
+import { ImageGrid } from "../../../components/ImageGrid"
 
 import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil"
-import { uploadImageSelectorFamily } from "../../../recoil/image/imageSelector"
+import {
+  uploadImageSelectorFamily,
+  imageListSelector,
+} from "../../../recoil/image/imageSelector"
 import { imageFileState, imageListState } from "../../../recoil/image/imageAtom"
 
 interface BookFormProps {
@@ -46,9 +49,7 @@ interface BookFormField {
 export const BookForm = ({ book }: BookFormProps) => {
   const responseBody: { [key: string]: string } = {}
 
-  const inputFileRefCover = useRef<HTMLInputElement>(null)
-
-  const imageList = useRecoilValue(imageListState)
+  const imageList = useRecoilValue(imageListSelector)
 
   const covers = imageList.filter(
     (image: Image) => !image.bookCoverId && image.type === "cover"
@@ -62,11 +63,10 @@ export const BookForm = ({ book }: BookFormProps) => {
     book?.publicationDate || ""
   )
   const [type, setType] = useState(book?.type || "")
+  const [cover, setCover] = useState(book?.cover || undefined)
   const [genre, setGenre] = useState(book?.genre || "")
   const [illustrator, setIllustrator] = useState(book?.illustrator || "")
   const [publisher, setPublisher] = useState(book?.publisher || "")
-  const [cover, setCover] = useState<Image | null>(book?.cover || null)
-  const [preview, setPreview] = useState<File | null>(null)
 
   const bookFormFields: BookFormField[] = [
     {
@@ -86,8 +86,8 @@ export const BookForm = ({ book }: BookFormProps) => {
     {
       type: "date",
       name: "publicationDate",
+      label: "",
       value: publicationDate,
-      label: "Fecha de publicacion",
       onChange: (event) => setPublicationDate(event.target.value),
     },
     {
@@ -133,31 +133,14 @@ export const BookForm = ({ book }: BookFormProps) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
+    if (cover) formData.append("cover", "/images/" + cover)
+
     formData.forEach(
       (value, property) => (responseBody[property] = value.toString())
     )
 
-    console.log("bookForm res: ", responseBody)
+    console.log("RES ", responseBody)
   }
-
-  const handleDropCover = (file: File) => {
-    setPreview((preview) => file)
-  }
-
-  const handleCreateImage = useRecoilCallback(
-    ({ snapshot }) =>
-      async () => {
-        const uploadImage = await snapshot.getPromise(
-          uploadImageSelectorFamily(preview)
-        )
-        if (uploadImage) {
-          console.log("Upload successful", uploadImage)
-        } else {
-          console.log("Upload failed")
-        }
-      },
-    []
-  )
 
   useEffect(() => {
     const {
@@ -168,7 +151,7 @@ export const BookForm = ({ book }: BookFormProps) => {
       genre = "",
       illustrator = "",
       publisher = "",
-      cover = {},
+      cover = undefined,
     } = book || {}
     setName(name)
     setDescription(description)
@@ -185,8 +168,9 @@ export const BookForm = ({ book }: BookFormProps) => {
       component={"form"}
       onSubmit={handleSubmit}
       display="grid"
-      gridTemplateColumns="55% 43%"
+      gridTemplateColumns="2fr 3fr"
       gap={3}
+      py={3}
       sx={{
         "* > *": {
           color: "white",
@@ -205,26 +189,6 @@ export const BookForm = ({ book }: BookFormProps) => {
       >
         {bookFormFields.map((field, index) => {
           switch (field.type) {
-            case "date":
-              return (
-                <Box
-                  component={FormControl}
-                  key={`${field.type}_${index}`}
-                  variant="filled"
-                  gridColumn={"span 2"}
-                >
-                  <InputLabel shrink htmlFor="date-input">
-                    {field.label}
-                  </InputLabel>
-                  <Box
-                    component={TextField}
-                    name={field.name}
-                    type={field.type}
-                    value={field.value}
-                    variant="filled"
-                  />
-                </Box>
-              )
             case "select":
               return (
                 <CustomSelectInput key={`${field.type}_${index}`} {...field} />
@@ -244,18 +208,27 @@ export const BookForm = ({ book }: BookFormProps) => {
         <Box component={TextField} label="CHAPTERS" />
       </Box>
 
-      <Box height="50vh">
-        <CustomDropzone
-          name="cover"
-          onDrop={handleDropCover}
-          cover={cover?.url ? cover : null}
-          handleSaveImage={handleCreateImage}
-        >
-          <ImageSquares images={covers} />
-        </CustomDropzone>
+      <Box maxHeight="500px" sx={{ overflowY: "scroll" }}>
+        {cover ? (
+          <Box
+            component="img"
+            height="100%"
+            src={`http://localhost:4000/images/${cover}`}
+            sx={{
+              objectFit: "contain",
+            }}
+          />
+        ) : (
+          <ImageGrid
+            images={imageList}
+            onClick={(e: React.MouseEvent<HTMLImageElement>) =>
+              setCover(e.currentTarget.getAttribute("src")?.split("/")[4])
+            }
+          />
+        )}
       </Box>
 
-      <Box gridColumn="span 2" component={ButtonGroup} fullWidth>
+      <Box gridColumn="span 2" display="flex" justifyContent="end">
         <Button value="submit-funeral" type="submit" variant="contained">
           Crear
         </Button>

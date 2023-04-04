@@ -58,6 +58,7 @@ export const uploadImageSelectorFamily = selectorFamily<null, any>({
 
       console.log("DATA ", formData)
 
+      return
       try {
         const response = await client.post("/images", formData)
 

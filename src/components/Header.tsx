@@ -38,7 +38,7 @@ const Header = () => {
   return (
     <>
       <AppBar
-        position="fixed"
+        position={location.pathname === "/" ? "fixed" : "sticky"}
         color="transparent"
         elevation={0}
         sx={{

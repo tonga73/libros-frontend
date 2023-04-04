@@ -22,22 +22,32 @@ import AddIcon from "@mui/icons-material/Add"
 import DeleteIcon from "@mui/icons-material/Delete"
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate"
 
+import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil"
+import { uploadImageSelectorFamily } from "../recoil/image/imageSelector"
+import { imageFileState, imageListState } from "../recoil/image/imageAtom"
 interface DropzoneProps {
-  name: string
-  onDrop: (files: FileUploadPreview) => void
-  cover?: Image | undefined | null
-  handleSaveImage: () => void
   children?: JSX.Element
 }
 
-export function CustomDropzone({
-  name,
-  onDrop,
-  cover,
-  handleSaveImage,
-  children,
-}: DropzoneProps) {
+export function CustomDropzone({ children }: DropzoneProps) {
+  const [imageFile, setImageFile] = useRecoilState(imageFileState)
   const [file, setFile] = useState<FileUploadPreview | null>(null)
+  const [preview, setPreview] = useState<File | null>(null)
+
+  const handleSaveImage = useRecoilCallback(
+    ({ snapshot }) =>
+      async () => {
+        const uploadImage = await snapshot.getPromise(
+          uploadImageSelectorFamily(file)
+        )
+        if (uploadImage) {
+          console.log("Upload successful", uploadImage)
+        } else {
+          console.log("Upload failed")
+        }
+      },
+    []
+  )
 
   const handleDrop = useCallback(
     (
@@ -49,24 +59,17 @@ export function CustomDropzone({
         const myFile: FileUploadPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
-        if (cover) {
-          myFile.cover = cover
-        }
+
         return myFile
       })
 
       setFile(null)
       setFile(myFiles[0])
-      onDrop(myFiles[0])
     },
-    [onDrop, cover]
+    []
   )
 
   const handleRemove = () => {
-    if (cover) {
-      return
-    }
-
     setFile(null)
   }
 
@@ -75,13 +78,8 @@ export function CustomDropzone({
   })
 
   useEffect(() => {
-    if (cover) {
-      const updatedFile = Object.assign({}, file)
-      updatedFile.cover = cover
-      setFile(updatedFile)
-    }
-    ;(isDragActive || !cover) && setFile(null)
-  }, [cover, isDragActive])
+    isDragActive && setFile(null)
+  }, [isDragActive])
 
   return (
     <Box
@@ -99,8 +97,8 @@ export function CustomDropzone({
             <Box
               component="img"
               src={
-                file.cover?.url
-                  ? `${import.meta.env.VITE_API_URL}${file.cover.url}`
+                file.cover
+                  ? `${import.meta.env.VITE_API_URL}${file.cover}`
                   : file.preview
               }
               alt={file.name}
@@ -115,11 +113,7 @@ export function CustomDropzone({
                 <DeleteIcon />
               </IconButton>
 
-              <Button
-                disabled={!!file.cover?.url}
-                onClick={handleSaveImage}
-                variant="contained"
-              >
+              <Button onClick={handleSaveImage} variant="contained">
                 Guardar Tapa
               </Button>
             </Box>
@@ -127,7 +121,7 @@ export function CustomDropzone({
         </Box>
       ) : (
         <>
-          <Box component={Input} {...getInputProps({ name })} />
+          <Box component={Input} />
           <Box display="flex" height="100%">
             {isDragActive ? (
               <Box
