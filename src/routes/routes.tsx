@@ -31,6 +31,10 @@ const routes = [
     path: "contacto",
     element: "CONTACTO",
   },
+  {
+    path: "admin",
+    element: "ADMIN",
+  },
 ]
 
 export default routes

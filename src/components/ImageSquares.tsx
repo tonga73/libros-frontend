@@ -27,7 +27,13 @@ export const ImageSquares = ({
       rowHeight={withDetails ? rowHeight || "auto" : rowHeight || 200}
     >
       {images.map(({ id, url }, index) => (
-        <ImageListItem key={index} sx={{ cursor: "pointer" }}>
+        <ImageListItem
+          key={index}
+          onClick={() => {
+            navigator.clipboard.writeText(url!)
+          }}
+          sx={{ cursor: "pointer" }}
+        >
           <img
             id={`image-square-${id}`}
             src={`${

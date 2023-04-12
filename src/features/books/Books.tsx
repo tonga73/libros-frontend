@@ -21,7 +21,7 @@ import {
 
 const Books = () => {
   const bookList = useRecoilValue(bookListState)
-  const [book, setBook] = useRecoilState(bookState)
+  const [selectedBook, setSelectedBook] = useRecoilState(bookState)
   const [newBookMode, setNewBookMode] = useState(false)
 
   const covers = bookList.map(({ id, name, cover }) => ({
@@ -29,6 +29,8 @@ const Books = () => {
     name,
     cover,
   }))
+
+  console.log("COVERS ", covers)
 
   const handleSelectedBook = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -40,30 +42,23 @@ const Books = () => {
     const selectedBook = bookList.find((book) => book.id === Number(bookId))
 
     if (selectedBook) {
-      setBook(selectedBook)
+      setSelectedBook(selectedBook)
     }
   }
 
   return (
     <Box component={Container} disableGutters fixed p={3}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        sx={{ placeSelf: "center" }}
-      >
-        <Button
-          size="small"
-          onClick={() => setNewBookMode(!newBookMode)}
-          color={newBookMode ? "inherit" : "secondary"}
-        >
-          {newBookMode ? "Cancelar" : "Crear Libro"}
-        </Button>
+      <Box>
+        {bookList.map((book, index) => (
+          <Box
+            key={index}
+            component="img"
+            src={book.cover}
+            height={100}
+            width="100px"
+          />
+        ))}
       </Box>
-      {newBookMode ? (
-        <BookForm book={book} />
-      ) : (
-        <ImageGrid onClick={handleSelectedBook} images={covers} />
-      )}
     </Box>
   )
 }

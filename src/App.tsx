@@ -25,13 +25,10 @@ import routes from "./routes/routes"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" errorElement={<Error404 />}>
-      {/* MAIN LAYOUT */}
-      <Route path="/" element={<Root />}>
-        {routes.map((route, index) => (
-          <Route key={index} {...route} />
-        ))}
-      </Route>
+    <Route path="/" element={<Root />} errorElement={<Error404 />}>
+      {routes.map((route, index) => (
+        <Route key={index} {...route} />
+      ))}
     </Route>
   )
 )

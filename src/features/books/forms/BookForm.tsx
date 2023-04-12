@@ -16,12 +16,11 @@ import { CustomDropzone } from "../../../components/CustomDropzone"
 
 import { ImageGrid } from "../../../components/ImageGrid"
 
+import client from "../../../api/client"
 import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil"
-import {
-  uploadImageSelectorFamily,
-  imageListSelector,
-} from "../../../recoil/image/imageSelector"
-import { imageFileState, imageListState } from "../../../recoil/image/imageAtom"
+import { bookDataState } from "../../../recoil/book/bookAtom"
+import { createBookSelector } from "../../../recoil/book/bookSelector"
+import { imageListSelector } from "../../../recoil/image/imageSelector"
 
 interface BookFormProps {
   book?: Book
@@ -51,11 +50,6 @@ export const BookForm = ({ book }: BookFormProps) => {
 
   const imageList = useRecoilValue(imageListSelector)
 
-  const covers = imageList.filter(
-    (image: Image) => !image.bookCoverId && image.type === "cover"
-  )
-
-  const [books, setBooks] = useState<Book[]>([])
   // controlled inputs
   const [name, setName] = useState(book?.name || "")
   const [description, setDescription] = useState(book?.description || "")
@@ -63,7 +57,7 @@ export const BookForm = ({ book }: BookFormProps) => {
     book?.publicationDate || ""
   )
   const [type, setType] = useState(book?.type || "")
-  const [cover, setCover] = useState(book?.cover || undefined)
+  const [cover, setCover] = useState(book?.cover || null)
   const [genre, setGenre] = useState(book?.genre || "")
   const [illustrator, setIllustrator] = useState(book?.illustrator || "")
   const [publisher, setPublisher] = useState(book?.publisher || "")
@@ -124,22 +118,23 @@ export const BookForm = ({ book }: BookFormProps) => {
     },
   ]
 
-  const handleCreate = (obj: Book): void => {
-    obj.id = Math.random()
-    setBooks([...books, obj])
-  }
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
-    if (cover) formData.append("cover", "/images/" + cover)
+    if (cover) formData.append("cover", cover)
 
     formData.forEach(
       (value, property) => (responseBody[property] = value.toString())
     )
 
-    console.log("RES ", responseBody)
+    try {
+      const createdBook = await client.post(`/books/`, responseBody)
+
+      console.log("created ", createdBook)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -151,7 +146,7 @@ export const BookForm = ({ book }: BookFormProps) => {
       genre = "",
       illustrator = "",
       publisher = "",
-      cover = undefined,
+      cover = null,
     } = book || {}
     setName(name)
     setDescription(description)
@@ -213,7 +208,7 @@ export const BookForm = ({ book }: BookFormProps) => {
           <Box
             component="img"
             height="100%"
-            src={`http://localhost:4000/images/${cover}`}
+            src={cover}
             sx={{
               objectFit: "contain",
             }}
@@ -222,7 +217,7 @@ export const BookForm = ({ book }: BookFormProps) => {
           <ImageGrid
             images={imageList}
             onClick={(e: React.MouseEvent<HTMLImageElement>) =>
-              setCover(e.currentTarget.getAttribute("src")?.split("/")[4])
+              setCover(e.currentTarget.getAttribute("src"))
             }
           />
         )}

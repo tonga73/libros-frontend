@@ -1,5 +1,5 @@
 import client from "../../api/client"
-import { selector, SetRecoilState } from "recoil"
+import { selector, SetRecoilState, selectorFamily } from "recoil"
 import {
   bookListState,
   bookState,
@@ -18,23 +18,23 @@ export const bookListSelector = selector<Book[]>({
   },
 })
 
-export const createBookSelector = selector({
+export const createBookSelector = selectorFamily<Book | undefined, {}>({
   key: "createBookSelector",
-  get: async ({ get }) => {
-    const bookData = get(bookDataState)
-    return client.post("/books", bookData).then((response) => response.data)
-  },
-  set: ({ set }, bookData) => {
-    set(isLoadingAtom, true) // set isLoading to true
-    set(isCompletedAtom, false) // set isCompleted to false
-    set(createBookSelector, async ({ get, set }) => {
-      const response = await client.post("/books", bookData)
-      const { data } = response
-      set(isLoadingAtom, false) // set isLoading to false
-      set(isCompletedAtom, true) // set isCompleted to true
-      return data
-    })
-  },
+  get:
+    (id) =>
+    async ({ get }) => {
+      console.log("ID ", id)
+      return undefined
+    },
+  set:
+    (book) =>
+    async ({ get }) => {
+      console.log("BOOK ", book)
+      // const response = await client.post(`/books/`, book)
+      // const { data } = response
+
+      // return data
+    },
 })
 
 export const deleteBook = selector({

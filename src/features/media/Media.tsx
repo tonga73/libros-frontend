@@ -16,7 +16,7 @@ const Media = () => {
 
   return (
     <Box component={Container} disableGutters>
-      <ImageSquares images={imageList} cols={5} withDetails />
+      <ImageSquares images={imageList} cols={3} withDetails />
     </Box>
   )
 }

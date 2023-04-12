@@ -1,5 +1,7 @@
 import React, { useEffect } from "react"
 
+import Box from "@mui/material/Box"
+
 import { useRecoilValue } from "recoil"
 import { imageSelector } from "../recoil/image/imageSelector"
 
@@ -12,5 +14,5 @@ interface ImageDetailsProps {
 export const ImageDetails = ({ id }: ImageDetailsProps) => {
   const image = useRecoilValue(imageSelector(id))
 
-  return <div>{image ? image.filename : "SIN DETALLES"}</div>
+  return <div>{image ? <Box>{image.url}</Box> : "SIN DETALLES"}</div>
 }
