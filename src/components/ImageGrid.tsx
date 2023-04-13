@@ -32,7 +32,7 @@ export const ImageGrid = ({ onClick, images = [] }: ImageGridProps) => {
               component={motion.img}
               src={
                 url
-                  ? import.meta.env.VITE_API_URL + url
+                  ? url
                   : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
               }
               height="250px"

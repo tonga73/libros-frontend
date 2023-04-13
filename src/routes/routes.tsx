@@ -1,3 +1,10 @@
+// LAYOUT COMPONENTS
+import Root from "../layouts/Root"
+
+// GLOBAL COMPONENTS
+import Error404 from "../features/error-404/Error404"
+
+// PAGE COMPONENTS
 import Books from "../features/books/Books"
 import Landing from "../features/landing/Landing"
 import Media from "../features/media/Media"
@@ -12,28 +19,34 @@ export const mainRoutes = [
 
 const routes = [
   {
-    index: true,
-    element: <Landing />,
-  },
-  {
-    path: "bio",
-    element: "BIO",
-  },
-  {
-    path: "libros",
-    element: <Books />,
-  },
-  {
-    path: "media",
-    element: <Media />,
-  },
-  {
-    path: "contacto",
-    element: "CONTACTO",
-  },
-  {
-    path: "admin",
-    element: "ADMIN",
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: "bio",
+        element: "BIO",
+      },
+      {
+        path: "libros",
+        element: <Books />,
+      },
+      {
+        path: "media",
+        element: <Media />,
+      },
+      {
+        path: "contacto",
+        element: "CONTACTO",
+      },
+      {
+        path: "admin",
+        element: "ADMIN",
+      },
+    ],
   },
 ]
 

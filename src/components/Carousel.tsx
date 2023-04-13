@@ -36,9 +36,7 @@ const Carousel = ({ books }: CarouselProps) => {
         <Box
           display="grid"
           sx={{
-            backgroundImage: `url(${import.meta.env.VITE_API_URL}${
-              book.secondaryImage
-            })`,
+            backgroundImage: `url(${book.secondaryImage})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: { xs: "30%", lg: "center" },
@@ -104,7 +102,7 @@ const Carousel = ({ books }: CarouselProps) => {
                 <Box
                   component={motion.img}
                   key={book.name}
-                  src={`${import.meta.env.VITE_API_URL}${book.cover}`}
+                  src={book.cover}
                   alt={book.name}
                   onDragEnd={next}
                   sx={{
@@ -141,7 +139,7 @@ const Carousel = ({ books }: CarouselProps) => {
                   <Box
                     component={motion.img}
                     key={nextBook.name + "_next"}
-                    src={`${import.meta.env.VITE_API_URL}${nextBook.cover}`}
+                    src={nextBook.cover}
                     alt={nextBook.name}
                     onClick={next}
                     sx={{

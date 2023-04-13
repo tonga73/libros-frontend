@@ -96,11 +96,7 @@ export function CustomDropzone({ children }: DropzoneProps) {
           >
             <Box
               component="img"
-              src={
-                file.cover
-                  ? `${import.meta.env.VITE_API_URL}${file.cover}`
-                  : file.preview
-              }
+              src={file.cover ? file.cover : file.preview}
               alt={file.name}
               maxHeight="45vh"
               sx={{ objectFit: "contain" }}

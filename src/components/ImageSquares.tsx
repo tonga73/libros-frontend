@@ -36,12 +36,8 @@ export const ImageSquares = ({
         >
           <img
             id={`image-square-${id}`}
-            src={`${
-              import.meta.env.VITE_API_URL
-            }${url}?w=164&h=164&fit=crop&auto=format`}
-            srcSet={`${
-              import.meta.env.VITE_API_URL
-            }${url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            src={url + "?w=164&h=164&fit=crop&auto=format"}
+            srcSet={url + "?w=164&h=164&fit=crop&auto=format&dpr=2 2x"}
             alt={url}
             loading="lazy"
           />

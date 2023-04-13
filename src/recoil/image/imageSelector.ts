@@ -7,11 +7,16 @@ import {
 } from "recoil"
 import { imageFileState, imageListState, imageSelectedState } from "./imageAtom"
 
+import { API_URL } from "../../api/client"
+
 export const imageListSelector = selector<Image[]>({
   key: "imageListSelector",
   get: async ({ get }) => {
     const response = await client(`/images`)
     const { data } = response
+    data.forEach((image: Image) => {
+      image.url = API_URL + image.url
+    })
 
     return data
   },
@@ -24,6 +29,9 @@ export const imageSelector = selectorFamily<Image | undefined, number>({
     async ({ get }) => {
       const response = await client(`/images/single/${id}`)
       const { data } = response
+      data.forEach((image: Image) => {
+        image.url = API_URL + image.url
+      })
 
       return data
     },

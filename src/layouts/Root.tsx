@@ -9,7 +9,7 @@ import FloatingAlert from "../components/FloatingAlert"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 
-export const Root = () => {
+const Root = () => {
   return (
     <Box>
       <FloatingAlert />
@@ -21,3 +21,5 @@ export const Root = () => {
     </Box>
   )
 }
+
+export default Root

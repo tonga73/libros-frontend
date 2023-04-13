@@ -9,11 +9,18 @@ import {
   isLoadingAtom,
 } from "./bookAtom"
 
+import { API_URL } from "../../api/client"
+
 export const bookListSelector = selector<Book[]>({
   key: "bookListSelector",
   get: async ({ get }) => {
     const response = await client("/books")
     const { data } = response
+    data.forEach((book: Book) => {
+      book.cover = API_URL + book.cover
+      book.secondaryImage = API_URL + book.secondaryImage
+    })
+
     return data
   },
 })

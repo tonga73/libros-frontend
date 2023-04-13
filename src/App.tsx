@@ -14,24 +14,13 @@ import { AnimatePresence } from "framer-motion"
 import { useRecoilValue } from "recoil"
 import { themeState } from "./recoil/theme/themeAtom"
 
-// Layouts
-import { Root } from "./layouts/Root"
-
 // UTILITY ELEMENTS
 import Error404 from "./features/error-404/Error404"
 
 // MAIN ELEMENTS
 import routes from "./routes/routes"
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Root />} errorElement={<Error404 />}>
-      {routes.map((route, index) => (
-        <Route key={index} {...route} />
-      ))}
-    </Route>
-  )
-)
+const router = createBrowserRouter(routes)
 
 function App() {
   const themeMode = useRecoilValue(themeState)
