@@ -5,6 +5,8 @@ import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
+import { ChapterList } from "./ChapterList"
+
 import { useRecoilValue } from "recoil"
 import { bookState } from "../recoil/book/bookAtom"
 
@@ -50,15 +52,28 @@ export const Book = () => {
 
           {/* Book: type, name, description */}
           <Box sx={{ placeSelf: "center" }}>
-            <Typography variant="subtitle1" fontFamily="cinzel">
-              {book.type}
+            <Typography variant="h3" pb={1}>
+              {book.name}
             </Typography>
-            <Typography variant="h3">{book.name}</Typography>
-            <Typography variant="h6" fontFamily="bellefair">
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant="subtitle1"
+                fontFamily="cinzel"
+                color={alpha(theme.palette.text.primary, 0.7)}
+              >
+                {book.type}
+              </Typography>
+              <Typography variant="subtitle2">
+                &nbsp;| Ciencia ficción
+              </Typography>
+            </Box>
+            <Typography variant="h5" fontFamily="bellefair" p={1.5}>
               {book.description}
             </Typography>
           </Box>
-          <Box>3</Box>
+          <Box>
+            <ChapterList />
+          </Box>
         </Box>
       </Box>
     </Box>

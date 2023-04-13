@@ -51,6 +51,7 @@ const palette = {
     },
     background: {
       default: "#171717",
+      paper: "#171717",
     },
   },
   light: {
