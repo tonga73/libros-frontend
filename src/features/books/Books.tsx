@@ -48,14 +48,18 @@ const Books = () => {
 
   return (
     <Box component={Container} disableGutters fixed p={3}>
-      <Box>
+      <Box
+        display="grid"
+        gridTemplateColumns={`repeat(auto-fill, minmax(230.4px, 1fr))`}
+        bgcolor="red"
+      >
         {bookList.map((book, index) => (
           <Box
             key={index}
             component="img"
             src={book.cover}
-            height={100}
-            width="100px"
+            maxWidth="100%"
+            sx={{ objectFit: "contain" }}
           />
         ))}
       </Box>
