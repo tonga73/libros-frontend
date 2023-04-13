@@ -5,7 +5,7 @@ import Root from "../layouts/Root"
 import Error404 from "../features/error-404/Error404"
 
 // PAGE COMPONENTS
-import Books from "../features/books/Books"
+import Books, { BooksGrid, Book } from "../features/books/Books"
 import Landing from "../features/landing/Landing"
 import Media from "../features/media/Media"
 
@@ -34,6 +34,16 @@ const routes = [
       {
         path: "libros",
         element: <Books />,
+        children: [
+          {
+            index: true,
+            element: <BooksGrid />,
+          },
+          {
+            path: ":id",
+            element: <Book />,
+          },
+        ],
       },
       {
         path: "media",

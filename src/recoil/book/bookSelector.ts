@@ -3,18 +3,18 @@ import { selector, SetRecoilState, selectorFamily } from "recoil"
 import {
   bookListState,
   bookState,
-  bookDataState,
-  selectedBookIdState,
   isCompletedAtom,
   isLoadingAtom,
 } from "./bookAtom"
 
 import { API_URL } from "../../api/client"
 
+const baseApiPath = "/books/"
+
 export const bookListSelector = selector<Book[]>({
   key: "bookListSelector",
   get: async ({ get }) => {
-    const response = await client("/books")
+    const response = await client(baseApiPath)
     const { data } = response
     data.forEach((book: Book) => {
       book.cover = API_URL + book.cover
@@ -23,6 +23,20 @@ export const bookListSelector = selector<Book[]>({
 
     return data
   },
+})
+
+export const bookSelector = selectorFamily<Book, {}>({
+  key: "bookSelector",
+  get:
+    (id) =>
+    async ({ get }) => {
+      const response = await client(baseApiPath + id)
+      const { data } = response
+      data.cover = API_URL + data.cover
+      data.secondaryImage = API_URL + data.secondaryImage
+
+      return data
+    },
 })
 
 export const createBookSelector = selectorFamily<Book | undefined, {}>({
@@ -42,28 +56,4 @@ export const createBookSelector = selectorFamily<Book | undefined, {}>({
 
       // return data
     },
-})
-
-export const deleteBook = selector({
-  key: "deleteBook",
-  get: ({ get }) => get(bookState),
-  set: async ({ set, get }, id) => {
-    if (typeof id !== "number") {
-      console.error("Invalid book id")
-      return
-    }
-    try {
-      const response = await client.delete(`/books/${id}`)
-      if (!response) {
-        throw new Error("Failed to delete book")
-      }
-      const books = get(bookListState)
-      set(
-        bookListState,
-        books.filter((book) => book.id !== id)
-      )
-    } catch (error) {
-      console.error(error)
-    }
-  },
 })

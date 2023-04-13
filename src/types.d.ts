@@ -11,8 +11,8 @@ interface Navigation {
 
 // MODELS
 type Book = {
-  id?: number
-  name?: string
+  id: number
+  name: string
   description?: string
   publicationDate?: string
   type?: string

@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -9,9 +9,13 @@ import Typography from "@mui/material/Typography"
 import { mainRoutes } from "../routes/routes"
 
 const Footer = () => {
+  const location = useLocation()
+
+  console.log(location.pathname)
+
   return (
     <Box
-      display="grid"
+      display={location.pathname.startsWith("/libros/") ? "none" : "grid"}
       gridTemplateColumns={`repeat(5, 1fr)`}
       rowGap={5}
       justifyContent="center"

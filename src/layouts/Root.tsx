@@ -11,14 +11,14 @@ import Header from "../components/Header"
 
 const Root = () => {
   return (
-    <Box>
+    <>
       <FloatingAlert />
       <Header />
       <Suspense>
         <Outlet />
       </Suspense>
       <Footer />
-    </Box>
+    </>
   )
 }
 

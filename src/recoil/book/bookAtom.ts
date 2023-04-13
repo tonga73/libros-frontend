@@ -1,20 +1,10 @@
-import { atom } from "recoil"
+import { atom, atomFamily } from "recoil"
 
-import { bookListSelector } from "./bookSelector"
+import { bookListSelector, bookSelector } from "./bookSelector"
 
-export const bookDataState = atom<Book>({
-  key: "bookDataState",
-  default: {},
-})
-
-export const selectedBookIdState = atom<number | undefined>({
-  key: "selectedBookIdState",
-  default: undefined,
-})
-
-export const bookState = atom<Book>({
+export const bookState = atomFamily<Book, {}>({
   key: "bookState",
-  default: {},
+  default: (param) => bookSelector(param),
 })
 
 export const bookListState = atom<Book[]>({
