@@ -21,6 +21,7 @@ const routes = [
   {
     path: "/",
     element: <Root />,
+    errorElement: <Error404 />,
     children: [
       {
         index: true,
