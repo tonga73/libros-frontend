@@ -53,7 +53,7 @@ export const ChapterList = () => {
   }
 
   return (
-    <List sx={{ bgcolor: theme.palette.background.default }}>
+    <List sx={{ bgcolor: alpha(theme.palette.background.default, 0.9) }}>
       {[1, 2, 3, 4, 5].map((item, index) => (
         <ListItem
           key={index}
